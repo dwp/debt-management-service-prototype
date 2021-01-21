@@ -1,0 +1,8 @@
+
+.govuk-link:focus {
+    outline: 3px solid transparent;
+    color: govuk-colour("black");
+    background-color: govuk-colour("white");
+    box-shadow: 0 -2px govuk-colour("white"), 0 4px #0b0c0c;
+    text-decoration: none;
+}

@@ -1,0 +1,175 @@
+{% extends "layout_unbranded.html" %}
+
+{% block pageTitle %}
+  GOV.UK Prototype Kit
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <div class="card">
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-3">
+          David Ross
+        </h1>
+        <p class="govuk-heading-s">
+          RM 52 23 65 B
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="govuk-clearfix">
+          <h2 class="card-title govuk-heading-m govuk-!-font-weight-regular">
+            Debts
+          </h2>
+          <div class="card-title--total">
+            <p>Total outstanding
+              <span class="govuk-heading-l">
+                &pound;940.00
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <div class="card govuk-clearfix">
+          <h3 class="govuk-heading-m">
+            UC Advance (New Claims)
+          </h3>
+          <div class="govuk-width-container">
+            <div class="govuk-main-wrapper">
+              <div class="govuk-grid-row">
+                <div class="govuk-grid-column-one-half">
+                  <p>On Benefit Arrangement to Pay</p>
+                </div>
+                <div class="govuk-grid-column-one-half">
+
+                  {{ govukTable({
+                    classes: "sum",
+                    firstCellIsHeader: true,
+                    
+                    rows: [
+                      [
+                        {
+                          text: "Original balance"
+                        },
+                        {
+                          text: "£1,000.00",
+                          format: "numeric"
+                        }
+                      ],
+                      [
+                        {
+                          text: "Total paid"
+                        },
+                        {
+                          text: "£60.00",
+                          format: "numeric"
+                        }
+                      ],
+                      [
+                        {
+                          text: "Outstanding",
+                          classes: "govuk-!-font-size-24"
+                        },
+                        {
+                          text: "£940.00",
+                          classes: "govuk-!-font-size-24 govuk-!-font-weight-bold",
+                          format: "numeric"
+                        }
+                      ]
+                    ]
+                  }) }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+          <div class="govuk-clearfix">
+            <h2 class="card-title govuk-heading-m govuk-!-font-weight-regular">
+              Paid
+            </h2>
+            <div class="card-title--total">
+              <p>Total paid
+                <span class="govuk-heading-l">
+                  &pound;60.00
+                </span>
+              </p>
+            </div>
+          </div>
+
+          {{ govukTable({
+              classes: "",
+              firstCellIsHeader: false,
+              
+              head: [
+                {
+                  text: "Date"
+                },
+                {
+                  text: "Debt"
+                },
+                {
+                  text: "Payment Method"
+                },
+                {
+                  text: "Paid",
+                  format: "numeric"
+                }
+              ],
+
+              rows: [
+                [
+                  {
+                    text: "12/12/2020"
+                  },
+                  {
+                    text: "UC Advance (New Claims)"
+                  },
+                  {
+                    text: "Universal Credit deduction"
+                  },
+                  {
+                    text: "£20.00",
+                    format: "numeric"
+                  }
+                ],
+                [
+                  {
+                    text: "12/11/2020"
+                  },
+                  {
+                    text: "UC Advance (New Claims)"
+                  },
+                  {
+                    text: "Universal Credit deduction"
+                  },
+                  {
+                    text: "£20.00",
+                    format: "numeric"
+                  }
+                ],
+                [
+                  {
+                    text: "12/10/2020"
+                  },
+                  {
+                    text: "UC Advance (New Claims)"
+                  },
+                  {
+                    text: "Universal Credit deduction"
+                  },
+                  {
+                    text: "£20.00",
+                    format: "numeric"
+                  }
+                ]
+              ]
+            }) }}
+        </div>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,11 @@
+/// Single point border variables. Access using `wf-border()`
+///
+
+/// @type Map
+/// @access private
+
+$wf-border-points: (
+  0: 0,
+  1: 1px,
+  2: 2px
+) !default;

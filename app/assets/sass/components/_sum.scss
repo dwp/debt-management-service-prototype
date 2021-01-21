@@ -1,0 +1,24 @@
+.sum {
+    .govuk-table__header,
+    .govuk-table__cell {
+        border-bottom: none;
+    }
+
+    th[scope="row"] {
+        font-weight: normal;
+    }
+
+    tr:first-child {
+        .govuk-table__header,
+        .govuk-table__cell {
+            padding-top: govuk-spacing(0);
+        }  
+    }
+
+    tr:last-child {
+        .govuk-table__header,
+        .govuk-table__cell {
+            border-top: wf-border(2) solid govuk-colour("black");
+        }  
+    }
+}

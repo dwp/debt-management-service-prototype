@@ -1,0 +1,29 @@
+/// Single Point Borders
+///
+/// Returns measurement corresponding to the border size requested.
+///
+/// @param {Number} $border-point - Point on the border scale (set in `settings/_wireframe-settings.sccs`)
+///
+/// @returns {String} Spacing Measurement eg. 10px
+///
+/// @example scss
+///   .element {
+///     padding: govuk-border(5);
+///     top: govuk-border(2) !important; // if `!important` is required
+///   }
+/// @access public
+
+@function wf-border($border-point) {
+
+    $actual-input-type: type-of($border-point);
+    @if $actual-input-type != "number" {
+      @error "Expected a number (integer), but got a "
+      + "#{$actual-input-type}.";
+    }
+  
+    @if not map-has-key($wf-border-points, $border-point) {
+      @error "Unknown border variable `#{$border-point}`. Make sure you are using a point from the border scale in `settings/_wireframe-settings.scss`.";
+    }
+  
+    @return map-get($wf-border-points, $border-point);
+  }

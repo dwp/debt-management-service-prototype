@@ -1,0 +1,27 @@
+.card {
+    background: govuk-colour("white");
+    border: wf-border(1) govuk-colour("mid-grey") solid;
+    padding: govuk-spacing(6);
+    padding-bottom: 0;
+    margin-bottom: govuk-spacing(6);
+
+    .govuk-main-wrapper {
+        padding: govuk-spacing(0);
+    }
+}
+
+.card-title {
+    float: left;
+    margin-top: govuk-spacing(2);
+    margin-bottom: govuk-spacing(0);
+}
+
+.card-title--total {
+    float: right;
+    text-align: right;
+
+    [class^='govuk-heading-'] {
+        display: inline;
+        margin-left: govuk-spacing(2);
+    }
+}
