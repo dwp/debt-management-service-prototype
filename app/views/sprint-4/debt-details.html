@@ -1,3 +1,7 @@
+{% set balance = 500 %}
+{% set paid = 100 %}
+{% set owe = balance - paid %}
+
 {% extends "layout_unbranded.html" %}
 
 {% block pageTitle %}
@@ -25,15 +29,15 @@
         <dl class="govuk-clearfix govuk-section-break--l key-values ">
           <div class="key-values-col govuk-grid-column-one-third">
             <dt class="govuk-caption-m govuk-!-margin-bottom-0">Original balance</dt>
-            <dd class="govuk-heading-l govuk-!-margin-left-0">£500.00</dd>
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ balance.toFixed(2) }}</dd>
           </div>
           <div class="key-values-col govuk-grid-column-one-third">
             <dt class="govuk-caption-m govuk-!-margin-bottom-0">Paid</dt>
-            <dd class="govuk-heading-l govuk-!-margin-left-0">£60.00</dd>
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ paid.toFixed(2)  }}</dd>
           </div>
           <div class="key-values-col govuk-grid-column-one-third">
             <dt class="govuk-caption-m govuk-!-margin-bottom-0">Owed</dt>
-            <dd class="govuk-heading-l govuk-!-margin-left-0">£440.00</dd>
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ owe.toFixed(2)  }}</dd>
           </div>
         </dl>
 
@@ -149,6 +153,30 @@
             ],
 
             rows: [
+              [
+                {
+                  text: "12/02/2021"
+                },
+                {
+                  text: "Universal Credit deduction (£50.00)"
+                },
+                {
+                  text: "£20.00",
+                  format: "numeric"
+                }
+              ],
+              [
+                {
+                  text: "12/01/2021"
+                },
+                {
+                  text: "Universal Credit deduction (£50.00)"
+                },
+                {
+                  text: "£20.00",
+                  format: "numeric"
+                }
+              ],
               [
                 {
                   text: "12/12/2020"
