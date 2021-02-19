@@ -1,9 +1,5 @@
 {% extends "layout_unbranded.html" %}
 
-{% block pageTitle %}
-  GOV.UK Prototype Kit
-{% endblock %}
-
 {% block content %}
 
   <div class="govuk-grid-row">
@@ -85,6 +81,90 @@
           </div>
         </div>
       </div>
+
+      <div class="card">
+          <div class="govuk-clearfix">
+            <h2 class="title-inline-total govuk-heading-m govuk-!-font-weight-regular">
+              Paid
+            </h2>
+            <div class="title-total">
+              <p>Total paid
+                <span class="govuk-heading-l">
+                  &pound;60.00
+                </span>
+              </p>
+            </div>
+          </div>
+
+          {{ govukTable({
+              classes: "",
+              firstCellIsHeader: false,
+              
+              head: [
+                {
+                  text: "Date"
+                },
+                {
+                  text: "Debt"
+                },
+                {
+                  text: "Payment Method"
+                },
+                {
+                  text: "Paid",
+                  format: "numeric"
+                }
+              ],
+
+              rows: [
+                [
+                  {
+                    text: "12/12/2020"
+                  },
+                  {
+                    text: "UC Advance (New Claims)"
+                  },
+                  {
+                    text: "Universal Credit deduction"
+                  },
+                  {
+                    text: "£20.00",
+                    format: "numeric"
+                  }
+                ],
+                [
+                  {
+                    text: "12/11/2020"
+                  },
+                  {
+                    text: "UC Advance (New Claims)"
+                  },
+                  {
+                    text: "Universal Credit deduction"
+                  },
+                  {
+                    text: "£20.00",
+                    format: "numeric"
+                  }
+                ],
+                [
+                  {
+                    text: "12/10/2020"
+                  },
+                  {
+                    text: "UC Advance (New Claims)"
+                  },
+                  {
+                    text: "Universal Credit deduction"
+                  },
+                  {
+                    text: "£20.00",
+                    format: "numeric"
+                  }
+                ]
+              ]
+            }) }}
+        </div>
     </div>
   </div>
 

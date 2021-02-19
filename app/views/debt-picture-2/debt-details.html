@@ -4,17 +4,6 @@
 
 {% extends "layout_unbranded.html" %}
 
-{% block pageTitle %}
-  GOV.UK Prototype Kit
-{% endblock %}
-
-{% block beforeContent %}
-  {{ govukBackLink({
-    text: "Back",
-    href: "#"
-  }) }}
-{% endblock %}
-
 {% block content %}
 
   <div class="govuk-grid-row">
@@ -23,17 +12,20 @@
       {% include "includes/citizen-header.html" %}
 
       <section class="section">
+        <h2 class="govuk-heading-m">
+          Universal Credit Advance (New Claims)
+        </h2>
         <dl class="govuk-clearfix govuk-section-break--l key-values ">
           <div class="key-values-col govuk-grid-column-one-third">
-            <dt class="govuk-caption-m govuk-!-margin-bottom-0">Total balance</dt>
+            <dt class="govuk-caption-m govuk-!-margin-bottom-0">Original balance</dt>
             <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ balance.toFixed(2) }}</dd>
           </div>
           <div class="key-values-col govuk-grid-column-one-third">
-            <dt class="govuk-caption-m govuk-!-margin-bottom-0">Total paid</dt>
+            <dt class="govuk-caption-m govuk-!-margin-bottom-0">Amount repaid</dt>
             <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ paid.toFixed(2)  }}</dd>
           </div>
           <div class="key-values-col govuk-grid-column-one-third">
-            <dt class="govuk-caption-m govuk-!-margin-bottom-0">Total owed</dt>
+            <dt class="govuk-caption-m govuk-!-margin-bottom-0">Amount owed</dt>
             <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ owe.toFixed(2)  }}</dd>
           </div>
         </dl>
@@ -56,7 +48,7 @@
                   },
                   {
                     key: {
-                      text: "Next payment date"
+                      text: "Next repayment due"
                     },
                     value: {
                       text: "12/03/2021"
@@ -128,7 +120,7 @@
 
       <section class="govuk-!-margin-bottom-2">
         <h2 class="card-title govuk-heading-m govuk-!-font-weight-regular">
-          Payment history
+          Repayment history
         </h2>
 
         {{ govukTable({
@@ -141,10 +133,10 @@
               },
               
               {
-                text: "Payment Method"
+                text: "Repayment Method"
               },
               {
-                text: "Paid",
+                text: "Amount",
                 format: "numeric"
               }
             ],
