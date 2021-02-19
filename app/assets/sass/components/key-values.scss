@@ -1,0 +1,22 @@
+.key-values {
+    border-left: 5px solid govuk-colour("blue");
+	background: rgba(govuk-colour("blue"), 0.05);
+    padding: 1em 1.2em;
+    display: block;
+    margin-left: 0;
+    margin-right: 0;
+    
+    dd {
+        margin-bottom: 0;
+    }
+}
+
+.key-values-col {
+    border-left: 1px solid govuk-colour("blue");
+    padding-left: govuk-spacing(4);
+
+    &:first-child {
+        border-left: none;
+        padding-left: 0;
+    }
+}

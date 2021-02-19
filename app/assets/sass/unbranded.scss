@@ -16,10 +16,21 @@ $govuk-font-family: "HelveticaNeue", "Helvetica Neue", "Arial", "Helvetica", san
 // $govuk-canvas-background-colour: $govuk-body-background-colour;
 
 @import "application";
+
+// custom settings
 @import "settings/wireframe-settings";
+
+// custom helpers
 @import "helpers/wireframe-helpers";
+
+// custom base styles
 @import "base/wireframe-base";
+@import "base/block";
 @import "base/links";
+
+// custom components
 @import "components/card";
 @import "components/sum";
 @import "components/table";
+@import "components/summary";
+@import "components/key-values";
