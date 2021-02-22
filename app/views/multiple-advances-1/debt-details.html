@@ -1,0 +1,9 @@
+{% import "includes/multiple-advances-1/_globals.html" as globals %}
+{% set debt = globals.debts[data.id] %}
+
+<h1>Debt details</h1>
+
+<h2>{{ debt.description }}</h2>
+<p>{{ data.id }}</p>
+<p>{{ debt.balance }}</p>
+<p>{{ debt.repaid }}</p>
