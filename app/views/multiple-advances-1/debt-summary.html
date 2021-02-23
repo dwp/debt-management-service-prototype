@@ -2,36 +2,6 @@
 {% set totalBalance = 0 %}
 {% set totalRepaid = 0 %}
 {% set totalOwed = 0 %}
-{% set repaidRowsTotal = 0 %}
-
-
-{% set debtRows = [] %}
-
-{% for debt in globals.debts %}
-  {% set debtRows = (debtRows.push(
-    [{
-      html: '<a href="debt-details.html?id=' + (loop.index - 1) + '" class="govuk-link">' + debt.description + '</a>' 
-    },
-    {
-      text: "£" + debt.balance.toFixed(2),
-      format: "numeric"
-    },
-    {
-      text: "£" + debt.repaid.toFixed(2),
-      format: "numeric"
-    },
-    {
-      text: "£" + (debt.balance - debt.repaid).toFixed(2),
-      format: "numeric"
-    ]}), debtRows) %}
-
-  {% set totalBalance = totalBalance + debt.balance %}
-  {% set totalRepaid = totalRepaid + debt.repaid %}
-{% endfor %}
-
-{% set totalOwed = totalBalance - totalRepaid %}
-
-
 
 {% set repaymentRows = [] %}
 
@@ -41,37 +11,64 @@
       text: repayment.date 
     },
     {
-      html: '<a href="repayment-details.html?id=' + loop.index + '" class="govuk-link">' + repayment.description + '</a>' 
+      html: '<a href="repayment-details.html?index=' + (loop.index - 1) + '" class="govuk-link">' + repayment.description + '</a>' 
     },
     {
-      text: "£" + ( totalRepaid/globals.repayments.length ).toFixed(2),
+      text: "£" + repayment.amount.toFixed(2),
       format: "numeric"
-    ]}), repaymentRows) %}
+    }]), repaymentRows) %}
 
-    {% set repaidRowsTotal = repaidRowsTotal + totalRepaid/globals.repayments.length %}
+  {% set totalRepaid = totalRepaid + repayment.amount %}
 {% endfor %}
 
+
+{% set debtRows = [] %}
+
+{% for debt in globals.debts %}
+  {% set debtRows = (debtRows.push(
+    [{
+      html: '<a href="debt-details.html?foo=bar&index=' + (loop.index - 1) + '" class="govuk-link">' + debt.description + '</a>' 
+    },
+    {
+      text: "£" + debt.balance.toFixed(2),
+      format: "numeric"
+    },
+    {
+      text: "£" + globals.debtRepaidEqual.toFixed(2),
+      format: "numeric"
+    },
+    {
+      text: "£" + ( debt.balance - globals.debtRepaidEqual).toFixed(2),
+      format: "numeric"
+    }]), debtRows) %}
+
+  {% set totalBalance = totalBalance + debt.balance %}
+  
+{% endfor %}
+
+{% set totalOwed = totalBalance - totalRepaid %}
 
 
 {% extends "layout_unbranded.html" %}
 
-
-
-{# {% block beforeContent %}
-  {{ govukBackLink({
-    text: "Back",
-    href: "#"
-  }) }}
-{% endblock %} #}
-
 {% block content %}
 
-{% if repaidRowsTotal != totalRepaid %}
-  {{govukTag({
-          text: "TODO: Repaid does not total",
-          classes: "govuk-tag--red"
-        })}}
-{% endif %}
+{# {{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Home",
+      href: "#"
+    },
+    {
+      text: "Passports, travel and living abroad",
+      href: "#"
+    },
+    {
+      text: "Travel abroad",
+      href: "#"
+    }
+  ]
+}) }} #}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
@@ -89,18 +86,20 @@
           </div>
           <div class="key-values-col govuk-grid-column-one-third">
             <dt class="govuk-caption-m govuk-!-margin-bottom-0">Total repaid</dt>
-            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ totalRepaid.toFixed(2)  }}</dd>
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ totalRepaid.toFixed(2) }}</dd>
           </div>
           <div class="key-values-col govuk-grid-column-one-third">
             <dt class="govuk-caption-m govuk-!-margin-bottom-0">Total owed</dt>
-            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ totalOwed.toFixed(2)  }}</dd>
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ totalOwed.toFixed(2) }}</dd>
           </div>
         </dl>
 
-        <div class="govuk-clearfix govuk-!-margin-top-5">
-          <h2 class="card-title govuk-heading-m govuk-!-font-weight-regular">
-            Debts ({{ globals.debts.length }})
-          </h2>
+ 
+
+        <div class="govuk-clearfix govuk-!-margin-top-9">
+          <h3 class="govuk-heading-m govuk-!-font-weight-regular">
+            Debts ({{ globals.debts.length }}) 
+          </h3>
 
           {{ govukTable({
             classes: "",
@@ -130,11 +129,10 @@
         </div>
       </section>
 
-
       <section class="govuk-!-margin-bottom-2">
-        <h2 class="card-title govuk-heading-m govuk-!-font-weight-regular">
-          Repayment history
-        </h2>
+        <h3 class="govuk-heading-m govuk-!-font-weight-regular">
+          Repayment history</a>
+        </h3>
 
         {{ govukTable({
             classes: "",
@@ -156,7 +154,72 @@
 
             rows: repaymentRows
           }) }}
-        </section>
+      </section>
+
+     
+
+      <section class="govuk-!-margin-bottom-2">
+        <h2 class="card-title govuk-heading-m">
+          Recent activity <a href="#" class="govuk-body govuk-link">see all <span class="govuk-visually-hidden">activities</span></a>
+        </h2>
+
+        <hr class="govuk-!-margin-bottom-2">
+
+        <div class="govuk-grid-row govuk-!-padding-3">
+          <div class="activity-list govuk-clearfix">
+            <div class="activity govuk-grid-column-two-thirds">
+              
+              <h3 class="govuk-heading-s">
+                Letter sent
+                <span class="govuk-body govuk-!-font-size-16">Fri, 12 Jan 2021 18:24</span>
+              </h3>
+              
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates quibusdam vel vero temporibus consequatur adipisci sit.</p>
+            </div>
+
+            <div class="activity govuk-grid-column-two-thirds">
+              
+              <h3 class="govuk-heading-s">
+                Letter sent
+                <span class="govuk-body govuk-!-font-size-16">Fri, 12 Jan 2021 18:24</span>
+              </h3>
+              
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates quibusdam vel vero temporibus consequatur adipisci sit.</p>
+            </div>
+
+            <div class="activity govuk-grid-column-two-thirds">
+              
+              <h3 class="govuk-heading-s">
+                Letter sent
+                <span class="govuk-body govuk-!-font-size-16">Fri, 12 Jan 2021 18:24</span>
+              </h3>
+              
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates quibusdam vel vero temporibus consequatur adipisci sit.</p>
+            </div>
+
+            <div class="activity govuk-grid-column-two-thirds">
+              
+              <h3 class="govuk-heading-s">
+                Letter sent
+                <span class="govuk-body govuk-!-font-size-16">Fri, 12 Jan 2021 18:24</span>
+              </h3>
+              
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates quibusdam vel vero temporibus consequatur adipisci sit.</p>
+            </div>
+
+            <div class="activity govuk-grid-column-two-thirds">
+              
+              <h3 class="govuk-heading-s">
+                Letter sent
+                <span class="govuk-body govuk-!-font-size-16">Fri, 12 Jan 2021 18:24</span>
+              </h3>
+              
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates quibusdam vel vero temporibus consequatur adipisci sit.</p>
+            </div>
+
+          </div>
+        </div>
+      </section>
     </div>
     
   </div>

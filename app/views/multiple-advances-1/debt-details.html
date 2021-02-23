@@ -1,9 +1,113 @@
 {% import "includes/multiple-advances-1/_globals.html" as globals %}
-{% set debt = globals.debts[data.id] %}
+{% set debt = globals.debts[data.index] %}
+{% set owed = debt.balance - globals.debtRepaidEqual %}
 
-<h1>Debt details</h1>
+{% set repaymentRows = [] %}
 
-<h2>{{ debt.description }}</h2>
-<p>{{ data.id }}</p>
-<p>{{ debt.balance }}</p>
-<p>{{ debt.repaid }}</p>
+{% for repayment in globals.repayments %}
+  {% set repaymentRows = (repaymentRows.push(
+    [{
+      text: repayment.date 
+    },
+    {
+      html: '<a href="repayment-details.html?index=' + (loop.index - 1) + '" class="govuk-link">' + repayment.description + '</a>' 
+    },
+    {
+      text: "£" + ( repayment.amount / globals.debts.length ).toFixed(2),
+      format: "numeric"
+    }]), repaymentRows) %}
+
+{% endfor %}
+
+{% extends "layout_unbranded.html" %}
+
+{% block content %}
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+ 
+      {% include "includes/multiple-advances-1/citizen-header.html" %}
+
+      <section class="section">
+        <h2 class="govuk-heading-m">
+          {{ debt.description }}
+        </h2>
+        <dl class="govuk-clearfix govuk-section-break--l key-values ">
+          <div class="key-values-col govuk-grid-column-one-third">
+            <dt class="govuk-caption-m govuk-!-margin-bottom-0">Original balance</dt>
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ debt.balance.toFixed(2) }}</dd>
+          </div>
+          <div class="key-values-col govuk-grid-column-one-third">
+            <dt class="govuk-caption-m govuk-!-margin-bottom-0">Amount repaid</dt>
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ globals.debtRepaidEqual.toFixed(2) }}</dd>
+          </div>
+          <div class="key-values-col govuk-grid-column-one-third">
+            <dt class="govuk-caption-m govuk-!-margin-bottom-0">Amount owed</dt>
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ owed.toFixed(2) }}</dd>
+          </div>
+        </dl>
+
+        <div class="govuk-clearfix govuk-!-margin-top-5">
+          <div class="govuk-grid-column-one-half govuk-!-padding-left-0">    
+            
+            {{ govukSummaryList({
+                classes: 'govuk-summary-list--no-border govuk-!-margin-bottom-0',
+                rows: [              
+                  {
+                    key: {
+                      text: "Advance received",
+                      class: "govuk-table__header"
+                    },
+                    value: {
+                      text: "05/01/2020",
+                      format: "numeric"
+                    }
+                  },
+                  {
+                    key: {
+                      text: "Next repayment due"
+                    },
+                    value: {
+                      text: "12/03/2021"
+                    }
+                  }
+                ]
+              }) }}  
+          </div>
+        </div>
+      </section>
+
+      <hr>
+
+      <section class="govuk-!-margin-bottom-2">
+        <h2 class="card-title govuk-heading-m govuk-!-font-weight-regular">
+          Repayment history
+        </h2>
+
+        {{ govukTable({
+            classes: "",
+            firstCellIsHeader: false,
+            
+            head: [
+              {
+                text: "Date"
+              },
+              
+              {
+                text: "Repayment Method"
+              },
+              {
+                text: "Amount",
+                format: "numeric"
+              }
+            ],
+
+            rows: repaymentRows
+          }) }}
+        </section>
+    </div>
+    
+  </div>
+
+{% endblock %}

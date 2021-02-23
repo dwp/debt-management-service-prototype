@@ -1,0 +1,89 @@
+{% import "includes/multiple-advances-1/_globals.html" as globals %}
+{% set repayment = globals.repayments[data.index] %}
+
+
+{% set debtRows = [] %}
+
+{% for debt in globals.debts %}
+  {% set debtRows = (debtRows.push(
+    [{
+      html: '<a href="debt-details.html?index=' + (loop.index - 1) + '" class="govuk-link">' + debt.description + '</a>' 
+    },
+    {
+      text: "£" + ( repayment.amount / globals.debts.length ).toFixed(2),
+      format: "numeric"
+    }]), debtRows) %}
+  
+{% endfor %}
+
+{% extends "layout_unbranded.html" %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+ 
+      {% include "includes/multiple-advances-1/citizen-header.html" %}
+
+      <section class="section">
+        <h2 class="govuk-heading-m">
+          {{ repayment.description }}
+        </h2>
+        <dl class="govuk-clearfix govuk-section-break--l  ">
+          <div class="key-values govuk-grid-column-one-third">
+            <dt class="govuk-caption-m govuk-!-margin-bottom-0">Repayment amount</dt>
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ repayment.amount.toFixed(2) }}</dd>
+          </div>
+        </dl>
+
+        <div class="govuk-clearfix govuk-!-margin-top-5">
+          <div class="govuk-grid-column-one-half govuk-!-padding-left-0">    
+            
+            {{ govukSummaryList({
+                classes: 'govuk-summary-list--no-border govuk-!-margin-bottom-0',
+                rows: [              
+                  {
+                    key: {
+                      text: "Repayment received",
+                      class: "govuk-table__header"
+                    },
+                    value: {
+                      text: repayment.date,
+                      format: "numeric"
+                    }
+                  }
+                ]
+              }) }}  
+          </div>
+        </div>
+      </section>
+
+      <hr>
+
+      <section class="govuk-!-margin-bottom-2">
+        <h2 class="card-title govuk-heading-m govuk-!-font-weight-regular">
+          Repayment allocations
+        </h2>
+
+        {{ govukTable({
+            classes: "",
+            firstCellIsHeader: false,
+            
+            head: [
+              {
+                text: "Debt"
+              },
+              {
+                text: "Amount",
+                format: "numeric"
+              }
+            ],
+
+            rows: debtRows
+          }) }}
+        </section>
+    </div>
+    
+  </div>
+
+{% endblock %}

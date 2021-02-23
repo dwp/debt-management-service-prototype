@@ -1,0 +1,23 @@
+.activity-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.activity {
+    background: rgba(govuk-colour("blue"), 0.05);
+    padding-top: govuk-spacing(2);
+    align-self: flex-start;
+    margin-bottom: govuk-spacing(4);
+
+    &.system {
+        background: govuk-colour("light-grey");
+        align-self: flex-end;
+    }
+
+    h3 span {
+        float: right;
+        text-align: right;
+    }
+
+
+}
