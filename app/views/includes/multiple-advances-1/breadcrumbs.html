@@ -1,0 +1,18 @@
+{% set links = [] %}
+
+{% for link, linkProps in data.breadcrumbs %}
+  {% if 'id' in linkProps %}
+    {% set url = linkProps.url + '/' + linkProps.id %}
+  {% else %}
+    {% set url = linkProps.url %}
+  {% endif %}
+
+  {% set links = (links.push({
+      text: linkProps.text,
+      href: url
+    }), links) %}    
+{% endfor %}
+
+{{ govukBreadcrumbs({
+  items: links
+}) }}

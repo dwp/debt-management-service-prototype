@@ -1,5 +1,5 @@
 {% import "includes/multiple-advances-1/_globals.html" as globals %}
-{% set repayment = globals.repayments[data.index] %}
+{% set repayment = globals.repayments[data.breadcrumbs.repaymentDetails.id] %}
 
 
 {% set debtRows = [] %}
@@ -7,7 +7,7 @@
 {% for debt in globals.debts %}
   {% set debtRows = (debtRows.push(
     [{
-      html: '<a href="debt-details.html?index=' + (loop.index - 1) + '" class="govuk-link">' + debt.description + '</a>' 
+      html: '<a href="../debt-details/' + (loop.index - 1) + '" class="govuk-link">' + debt.description + '</a>' 
     },
     {
       text: "£" + ( repayment.amount / globals.debts.length ).toFixed(2),
@@ -17,6 +17,10 @@
 {% endfor %}
 
 {% extends "layout_unbranded.html" %}
+
+{% block beforeContent %}
+  {% include "includes/multiple-advances-1/breadcrumbs.html" %}
+{% endblock %}
 
 {% block content %}
 

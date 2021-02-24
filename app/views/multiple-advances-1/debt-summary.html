@@ -11,7 +11,7 @@
       text: repayment.date 
     },
     {
-      html: '<a href="repayment-details.html?index=' + (loop.index - 1) + '" class="govuk-link">' + repayment.description + '</a>' 
+      html: '<a href="repayment-details/' + (loop.index - 1) + '" class="govuk-link">' + repayment.description + '</a>' 
     },
     {
       text: "£" + repayment.amount.toFixed(2),
@@ -21,13 +21,12 @@
   {% set totalRepaid = totalRepaid + repayment.amount %}
 {% endfor %}
 
-
 {% set debtRows = [] %}
 
 {% for debt in globals.debts %}
   {% set debtRows = (debtRows.push(
     [{
-      html: '<a href="debt-details.html?foo=bar&index=' + (loop.index - 1) + '" class="govuk-link">' + debt.description + '</a>' 
+      html: '<a href="debt-details/' + (loop.index - 1) + '" class="govuk-link">' + debt.description + '</a>' 
     },
     {
       text: "£" + debt.balance.toFixed(2),
@@ -52,23 +51,6 @@
 {% extends "layout_unbranded.html" %}
 
 {% block content %}
-
-{# {{ govukBreadcrumbs({
-  items: [
-    {
-      text: "Home",
-      href: "#"
-    },
-    {
-      text: "Passports, travel and living abroad",
-      href: "#"
-    },
-    {
-      text: "Travel abroad",
-      href: "#"
-    }
-  ]
-}) }} #}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
