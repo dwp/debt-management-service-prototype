@@ -1,18 +1,43 @@
+{% import "includes/multiple-advances-1/_globals.html" as globals %}
 {% set links = [] %}
+{% set breadcrumbs = [] %}
+
+{# <p>{{ globals['debts'] | dump}}</p> #}
+
 
 {% for link, linkProps in data.breadcrumbs %}
-  {% if 'id' in linkProps %}
-    {% set url = linkProps.url + '/' + linkProps.id %}
-  {% else %}
-    {% set url = linkProps.url %}
-  {% endif %}
 
-  {% set links = (links.push({
-      text: linkProps.text,
-      href: url
-    }), links) %}    
+    {% if 'id' in linkProps %}
+
+      {% set url = linkProps.url + '/' + linkProps.id %}
+      
+      {% if linkProps.text == 'debts' %}
+        {% set linkText = globals['debts'][linkProps.id].description %}
+        {# {% set linkText = 'desc only' %} #}
+      {% elif linkProps.text == 'repayments' %}
+        {% set linkText = globals['repayments'][linkProps.id].description + ' - ' + globals['repayments'][linkProps.id].date %}
+        {# {% set linkText = 'desc + date' %}       #}
+      {% endif %}
+
+    {% else %}
+      {% set url = linkProps.url %}
+       {% set linkText = linkProps.text %}
+    {% endif %}
+
+    {% set links = (links.push({
+        text: linkText,
+        href: url
+      }), links) %}    
+
 {% endfor %}
 
+{% for i in range(0, (links | length) - 1 ) %}
+  {% set breadcrumbs = (breadcrumbs.push( links[i] ), breadcrumbs) %}    
+{% endfor %}
+
+{# {{ links | dump }}#}
+{# {{ breadcrumbs | dump }}  #}
+
 {{ govukBreadcrumbs({
-  items: links
+  items: breadcrumbs
 }) }}

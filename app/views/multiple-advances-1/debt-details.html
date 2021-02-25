@@ -10,7 +10,7 @@
       text: repayment.date 
     },
     {
-      html: '<a href="../repayment-details/' + (loop.index - 1) + '" class="govuk-link">' + repayment.description + '</a>' 
+      html: '<a href="../repayment-details/' + (loop.index - 1) + '" class="govuk-link">' + repayment.description + '</a>'
     },
     {
       text: "£" + ( repayment.amount / globals.debts.length ).toFixed(2),

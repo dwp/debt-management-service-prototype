@@ -20,4 +20,13 @@ Example usage:
 module.exports = {
 
   // Insert values here
+  people: {
+    id: 1,
+    name: "David Ross",
+    nino: "RM 52 23 65 B",
+    onBenefit: true,
+    benefits: [ "Universal Credit" ]
+  }
+
+
 }
