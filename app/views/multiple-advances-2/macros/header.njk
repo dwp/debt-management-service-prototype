@@ -1,0 +1,31 @@
+{% macro header(name, nino, onBenefit, benefits) %}
+
+<p class="float-right"><a href="/prototype-admin/clear-data">Clear session</a></p>
+
+<header>
+  <h1 class="govuk-heading-l govuk-!-margin-bottom-3">
+      {{ name }}
+  </h1>
+  <p class="govuk-heading-s">
+      {{ nino }}
+  </p>
+  <div class="tag-bar govuk-!-margin-bottom-4">
+      <p class="govuk-body">
+          
+          {% if onBenefit %}
+            <strong class="govuk-tag">
+                On benefit
+            </strong>
+        {% else %}
+            <strong class="govuk-tag govuk-tag--grey">
+                Off benefit
+            </strong>
+         {% endif %}
+
+          {{ benefits }}
+      </p>
+  </div>
+</header>
+<hr>
+
+{% endmacro %}
