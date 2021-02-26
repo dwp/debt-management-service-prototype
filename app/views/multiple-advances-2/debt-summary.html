@@ -1,6 +1,7 @@
 
 {% from 'multiple-advances-2/macros/header.njk' import header as header %}
 {% from 'multiple-advances-2/macros/activity.njk' import activity as activityItem %}
+{% from 'multiple-advances-2/macros/breadcrumbs.njk' import breadcrumbs as breadcrumbs %}
 
 {% extends "layout_unbranded.html" %}
 
@@ -26,7 +27,7 @@
 
   {% set debtRows = (debtRows.push(
     [{
-      html: '<a href="debt-details/' + debt.id + '" class="govuk-link">' + debt.title + '</a>' 
+      html: '<a href="/multiple-advances-2/person/' + Person.id + '/debt-details/' + debt.id + '" class="govuk-link">' + debt.title + '</a>' 
     },
     {
       text: "£" + debt.originalBalance.toFixed(2),
@@ -58,7 +59,7 @@
         text: repayment.date 
         },
         {
-        html: '<a href="repayment-details/' + repayment.id + '" class="govuk-link">' + repayment.method + '</a>' 
+        html: '<a href="/multiple-advances-2/person/' + Person.id + '/repayment-details/' + repayment.id + '" class="govuk-link">' + repayment.method + '</a>' 
         },
         {
         text: "£" + totalRepayment.toFixed(2),
@@ -69,6 +70,8 @@
 {% endfor %}
 
 {% block content %}
+{{ breadcrumbs(links=Breadcrumbs) }}
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
  

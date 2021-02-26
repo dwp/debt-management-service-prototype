@@ -198,8 +198,10 @@ module.exports = {
       ],
       "debts": [
         {
-          "title": "Universal Credit Advance",
-          "balance": 400
+          "id": 3,
+          "title": "Budgeting Advance",
+          "originalBalance": 120,
+          "debtStart": "18/01/2020"
         }
       ]
     }
