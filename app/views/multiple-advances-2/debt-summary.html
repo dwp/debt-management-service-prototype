@@ -3,18 +3,11 @@
 
 {% extends "layout_unbranded.html" %}
 
-
-{% set Person = '' %}
 {% set debtRows = [] %}
 {% set repaymentRows = [] %}
 {% set totalBalance = 0 %}
 {% set totalRepaid = 0 %}
 
-{% for person in data.people %}
-    {% if person.id == personId %}
-        {% set Person = person %}
-    {% endif %}
-{% endfor %}
 
 {% for debt in Person.debts %}
 
@@ -32,7 +25,7 @@
 
   {% set debtRows = (debtRows.push(
     [{
-      html: '<a href="debt-details/' + loop.index + '" class="govuk-link">' + debt.title + '</a>' 
+      html: '<a href="debt-details/' + debt.id + '" class="govuk-link">' + debt.title + '</a>' 
     },
     {
       text: "£" + debt.originalBalance.toFixed(2),
@@ -64,7 +57,7 @@
         text: repayment.date 
         },
         {
-        html: '<a href="repayment-details/' + loop.index + '" class="govuk-link">' + repayment.method + '</a>' 
+        html: '<a href="repayment-details/' + repayment.id + '" class="govuk-link">' + repayment.method + '</a>' 
         },
         {
         text: "£" + totalRepayment.toFixed(2),
@@ -75,7 +68,6 @@
 {% endfor %}
 
 {% block content %}
-
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
  

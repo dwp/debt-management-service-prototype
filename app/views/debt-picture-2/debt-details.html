@@ -1,5 +1,5 @@
-{% set balance = 500 %}
-{% set paid = 100 %}
+{% set balance = 240 %}
+{% set paid = 140 %}
 {% set owe = balance - paid %}
 
 {% extends "layout_unbranded.html" %}
@@ -42,7 +42,7 @@
                       class: "govuk-table__header"
                     },
                     value: {
-                      text: "05/01/2020",
+                      text: "06/07/2020",
                       format: "numeric"
                     }
                   },
@@ -146,7 +146,32 @@
                   text: "£20.00",
                   format: "numeric"
                 }
+              ],
+              [
+                {
+                  text: "12/09/2020"
+                },
+                {
+                  text: "Universal Credit deduction"
+                },
+                {
+                  text: "£20.00",
+                  format: "numeric"
+                }
+              ],
+              [
+                {
+                  text: "12/08/2020"
+                },
+                {
+                  text: "Universal Credit deduction"
+                },
+                {
+                  text: "£20.00",
+                  format: "numeric"
+                }
               ]
+
             ]
           }) }}
         </section>

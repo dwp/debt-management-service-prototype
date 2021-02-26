@@ -2,34 +2,33 @@
 
 {% extends "layout_unbranded.html" %}
 
-{% set Person = '' %}
-{% set Debt = '' %}
+{% set totalRepaid = 0 %}
+
 {% set repaymentRows = [] %}
 
-{% for person in data.people %}
-    {% if person.id == personId %}
-        {% set Person = person %}
-    {% endif %}
+{% for repayment in Repayments %}
+
+    {% set repaymentRows = (repaymentRows.push(
+        [{
+        text: repayment.date 
+        },
+        {
+        html: '<a href="../repayment-details/' + repayment.id + '" class="govuk-link">' + repayment.method + '</a>' 
+        },
+        {
+        text: "£" + repayment.amount.toFixed(2),
+        format: "numeric"
+        }]), repaymentRows) %}
+
+    {% set totalRepaid = totalRepaid + repayment.amount %}
 {% endfor %}
-
-{% for debt in Person.debts %}
-    {% if debt.id == debtId %}
-        {% set Debt = debt %}
-    {% endif %}
-{% endfor %}
-
-
-
-
 
 {% block beforeContent %}
   {# {% include "includes/multiple-advances-1/breadcrumbs.html" %} #}
 {% endblock %}
 
 {% block content %}
-<p>{{ debtId }}</p>
 
-{{ Debt | dump }}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
  
@@ -44,14 +43,14 @@
             <dt class="govuk-caption-m govuk-!-margin-bottom-0">Original balance</dt>
             <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ Debt.originalBalance.toFixed(2) }}</dd>
           </div>
-          {# <div class="key-values-col govuk-grid-column-one-third">
+          <div class="key-values-col govuk-grid-column-one-third">
             <dt class="govuk-caption-m govuk-!-margin-bottom-0">Amount repaid</dt>
-            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ globals.debtRepaidEqual.toFixed(2) }}</dd>
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ totalRepaid.toFixed(2) }}</dd>
           </div>
           <div class="key-values-col govuk-grid-column-one-third">
             <dt class="govuk-caption-m govuk-!-margin-bottom-0">Amount owed</dt>
-            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ owed.toFixed(2) }}</dd>
-          </div> #}
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ (Debt.originalBalance - totalRepaid).toFixed(2) }}</dd>
+          </div> 
         </dl>
 
         <div class="govuk-clearfix govuk-!-margin-top-5">
@@ -109,7 +108,7 @@
               }
             ],
 
-            rows: []
+            rows: repaymentRows
           }) }}
         </section>
     </div>
