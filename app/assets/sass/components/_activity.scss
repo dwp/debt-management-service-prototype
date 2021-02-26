@@ -14,10 +14,17 @@
         align-self: flex-end;
     }
 
-    h3 span {
+    
+}
+
+.activity-title {
+    h3 {
+        width: 60%;
+        float: left;
+    }
+
+    span {
         float: right;
         text-align: right;
     }
-
-
 }

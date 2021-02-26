@@ -29,6 +29,32 @@ module.exports = {
       "benefits": [
         "Universal Credit"
       ],
+      "activities": [
+        {
+          "id": 1,
+          "title": "Budgeting Advance received",
+          "date": "Mon, 18 Jan 2021 09:00",
+          "content": "Claimant received £120 budgeting advance for the purchase of a new fridge."
+        },
+        {
+          "id": 2,
+          "title": "Incoming call to Debt Management",
+          "date": "Tues, 27 Oct 2020 13:20",
+          "content": "Claimant queried about balance remaining on advances."
+        },
+        {
+          "id": 3,
+          "title": "Universal Credit Advance (New Claims) received",
+          "date": "Wed, 15 July 2020 09:00",
+          "content": "Claimant received a second New Claims Advance for £300"
+        },
+        {
+          "id": 4,
+          "title": "Universal Credit Advance (New Claims) received",
+          "date": "Mon, 6 July 2020 09:00",
+          "content": "Claimant received a New Claims Advance for £240"
+        }
+      ],
       "debts": [
         {
           "id": 3,

@@ -1,5 +1,6 @@
 
 {% from 'multiple-advances-2/macros/header.njk' import header as header %}
+{% from 'multiple-advances-2/macros/activity.njk' import activity as activityItem %}
 
 {% extends "layout_unbranded.html" %}
 
@@ -153,6 +154,25 @@
             rows: repaymentRows
           }) }}
       </section>
+
+      <section class="govuk-!-margin-bottom-2">
+        <h2 class="card-title govuk-heading-m">
+          Recent activity {# <a href="#" class="govuk-body govuk-link">see all <span class="govuk-visually-hidden">activities</span></a> #}
+        </h2>
+
+        <hr class="govuk-!-margin-bottom-2">
+
+        <div class="govuk-grid-row govuk-!-padding-3">
+          <div class="activity-list govuk-clearfix">
+
+             {% for activity in Person.activities %}
+                {{ activityItem(activity=activity) }}
+            {%endfor%} 
+        
+          </div>
+        </div>
+      </section>
+
     </div>
   </div>
 

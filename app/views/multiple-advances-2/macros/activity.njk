@@ -1,0 +1,15 @@
+{% macro activity(activity) %}
+
+<div class="activity govuk-grid-column-two-thirds">
+
+    <div class="activity-title govuk-clearfix">
+        <h3 class="govuk-heading-s">
+            {{activity.title}}
+        </h3>
+        <span class="govuk-body govuk-!-font-size-16">{{activity.date}}</span>
+    </div>          
+    <p>{{activity.content}}</p>
+</div>
+
+
+{% endmacro %}
