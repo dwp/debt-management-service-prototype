@@ -1,54 +1,58 @@
-{% import "includes/multiple-advances-1/_globals.html" as globals %}
-{% set debt = globals.debts[data.breadcrumbs.debtDetails.id] %}
-{% set owed = debt.balance - globals.debtRepaidEqual %}
+{# Template overrides #}
+{% extends "layout.html" %}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
 
+{# Import macros #}
+{% from 'multiple-advances-v1/macros/header.njk' import header as header %}
+{% from 'multiple-advances-v1/macros/breadcrumbs.njk' import breadcrumbs as breadcrumbs %}
+
+
+{% set totalRepaid = 0 %}
 {% set repaymentRows = [] %}
 
-{% for repayment in globals.repayments %}
-  {% set repaymentRows = (repaymentRows.push(
-    [{
-      text: repayment.date 
-    },
-    {
-      html: '<a href="../repayment-details/' + (loop.index - 1) + '" class="govuk-link">' + repayment.description + '</a>'
-    },
-    {
-      text: "£" + ( repayment.amount / globals.debts.length ).toFixed(2),
-      format: "numeric"
-    }]), repaymentRows) %}
+{% for repayment in Repayments %}
 
+    {% set repaymentRows = (repaymentRows.push(
+        [{
+          text: repayment.date 
+        },
+        {
+          html: '<a href="../repayment-details/' + repayment.id + '" class="govuk-link">' + repayment.method + '</a>' 
+        },
+        {
+        text: "£" + repayment.amount.toFixed(2),
+        format: "numeric"
+        }]), repaymentRows) %}
+
+    {% set totalRepaid = totalRepaid + repayment.amount %}
 {% endfor %}
 
-{% extends "layout_unbranded.html" %}
-
-{% block beforeContent %}
-  {% include "includes/multiple-advances-1/breadcrumbs.html" %}
-{% endblock %}
 
 {% block content %}
-
+{{ breadcrumbs(links=Breadcrumbs) }}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
  
-      {% include "includes/multiple-advances-1/citizen-header.html" %}
+      {{ header(name=Person.name, nino=Person.nino, onBenefit=Person.onBenefit, benefits=Person.benefits) }}
 
       <section class="section">
         <h2 class="govuk-heading-m">
-          {{ debt.description }}
+          {{ Debt.title }}
         </h2>
         <dl class="govuk-clearfix govuk-section-break--l key-values ">
           <div class="key-values-col govuk-grid-column-one-third">
             <dt class="govuk-caption-m govuk-!-margin-bottom-0">Original balance</dt>
-            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ debt.balance.toFixed(2) }}</dd>
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ Debt.originalBalance.toFixed(2) }}</dd>
           </div>
           <div class="key-values-col govuk-grid-column-one-third">
             <dt class="govuk-caption-m govuk-!-margin-bottom-0">Amount repaid</dt>
-            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ globals.debtRepaidEqual.toFixed(2) }}</dd>
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ totalRepaid.toFixed(2) }}</dd>
           </div>
           <div class="key-values-col govuk-grid-column-one-third">
             <dt class="govuk-caption-m govuk-!-margin-bottom-0">Amount owed</dt>
-            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ owed.toFixed(2) }}</dd>
-          </div>
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ (Debt.originalBalance - totalRepaid).toFixed(2) }}</dd>
+          </div> 
         </dl>
 
         <div class="govuk-clearfix govuk-!-margin-top-5">
@@ -63,7 +67,7 @@
                       class: "govuk-table__header"
                     },
                     value: {
-                      text: "05/01/2020",
+                      text: Debt.debtStart,
                       format: "numeric"
                     }
                   },

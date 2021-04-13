@@ -20,11 +20,14 @@ Example usage:
 module.exports = {
 
   // Insert values here
+
   "people": [
     {
       "id": 1,
+      "scenario": "multiple-advances",
+      "version": 1, 
       "name": "David Ross",
-      "nino": "RM 52 23 65 B",
+      "nino": "QQ 52 23 65 Z",
       "onBenefit": true,
       "benefits": [
         "Universal Credit"
@@ -189,19 +192,117 @@ module.exports = {
     },
     {
       "id": 2,
-      "name": "linda smith",
-      "nino": "RM 52 23 65 C",
-      "onBenefit": false,
+      "name": "Gemma McDonald",
+      "nino": "QQ 41 34 68 Z",
+      "onBenefit": true,
       "benefits": [
-        "Universal Credit",
-        "something"
+        "Universal Credit"
+      ],
+      "activities": [
+        {
+          "id": 1,
+          "title": "Universal Credit Advance (New Claims) received",
+          "datetime": "2020-09-16T01:44:00.000Z",
+          "content": "Claimant received a New Claims Advance for £409.89"
+        },
+        {
+          "id": 2,
+          "title": "Universal Credit Overpayment",
+          "datetime": "2021-04-30T01:52:00.000Z",
+          "content": "Claimant has a Universal Credit overpayment of £208.89"
+        }
       ],
       "debts": [
         {
+          "id": 1,
+          "title": "Universal Credit Advance (New Claims)",
+          "originalBalance": 409.89,
+          "debtStart": "2020-09-11T23:59:59.000Z"
+        },
+        {
+          "id": 2,
+          "title": "Universal Credit Overpayment",
+          "originalBalance": 208.89,
+          "debtStart": "2021-04-30T23:59:59.000Z"
+        }
+      ],
+      "repayments": [
+        {
+          "id": 1,
+          "datetime": "2020-10-16T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "datetime": "2020-11-16T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
           "id": 3,
-          "title": "Budgeting Advance",
-          "originalBalance": 120,
-          "debtStart": "18/01/2020"
+          "datetime": "2020-12-16T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "datetime": "2021-01-15T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "datetime": "2021-02-16T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "datetime": "2021-03-16T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "datetime": "2021-04-16T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
         }
       ]
     }

@@ -41,5 +41,19 @@ module.exports = function (env) {
   /* ------------------------------------------------------------------
     keep the following line to return your filters to the app
   ------------------------------------------------------------------ */
+
+// Date filter - https://github.com/e-picas/nunjucks-date-filter
+var dateFilter = require('nunjucks-date-filter');
+dateFilter.install();
+dateFilter.setDefaultFormat('DD/MM/YYYY');
+
+filters.date = dateFilter;
+filters.dateTimeLong = function(dateTime) {
+  return dateFilter(dateTime, "ddd, DD MMM YYYY hh:mm");
+}
+
+
+
+
   return filters
 }

@@ -1,4 +1,7 @@
-{% extends "layout_unbranded.html" %}
+{# Template overrides #}
+{% extends "layout.html" %}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
 {% set htmlClasses = "background-colour-overide" %}
 {% set bodyClasses = "background-colour-overide" %}
 
@@ -8,20 +11,24 @@
     <div class="govuk-grid-column-full">
         <h1 class="govuk-heading-l">Debt Management Service Prototype</h1>
         <nav>
-          <h2 class="govuk-heading-m">Debt Picture #1</h2>
+          <h2 class="govuk-heading-m">Debt Picture version 1</h2>
           <ul class="govuk-list">
-            <li><a class="govuk-link" href="debt-picture-1/debt-picture-1.html">Debt Picture 1</a></li>
-            <li><a class="govuk-link" href="debt-picture-1/debt-picture-2.html">Debt Picture 2</a></li>
+            <li><a class="govuk-link" href="debt-picture-v1/debt-picture.html">Debt Picture</a></li>
+            <li><a class="govuk-link" href="debt-picture-v1/debt-picture-payments.html">Debt Picture (Payments)</a></li>
           </ul>
 
-          <h2 class="govuk-heading-m">Debt Picture #2</h2>
+          <h2 class="govuk-heading-m">Debt Picture version 2</h2>
           <ul class="govuk-list">
-            <li><a class="govuk-link" href="debt-picture-2/debt-details.html">David Ross - Single UC Advance</a></li>
+            <li><a class="govuk-link" href="debt-picture-v2/debt-details.html">David Ross - UC Advance (single)</a></li>
           </ul>
 
-          <h2 class="govuk-heading-m">Multiple Advances</h2>
+          <h2 class="govuk-heading-m">Multiple Advances version 1</h2>
           <ul class="govuk-list">
-            <li><a class="govuk-link" href="multiple-advances-2/person/1">David Ross - Multiple Advances</a></li>
+            <li><a class="govuk-link" href="multiple-advances-v1/person/1">David Ross - Multiple Advances (single)</a></li>
+          </ul> 
+          <h2 class="govuk-heading-m">Suspened Recovery version 1</h2>
+          <ul class="govuk-list">
+            <li><a class="govuk-link" href="/scenario/suspended-recovery/v/1/person/2">Gemma McDonald - Universal Credit Overpayment (UCOP)</a></li>
           </ul> 
         </nav>
     </div>

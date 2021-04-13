@@ -1,8 +1,12 @@
+{# Template overrides #}
+{% extends "layout.html" %}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{# Account Figures #}
 {% set balance = 240 %}
 {% set paid = 140 %}
 {% set owe = balance - paid %}
-
-{% extends "layout_unbranded.html" %}
 
 {% block content %}
 

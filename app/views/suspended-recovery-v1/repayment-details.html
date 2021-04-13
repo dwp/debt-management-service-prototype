@@ -1,42 +1,45 @@
-{% import "includes/multiple-advances-1/_globals.html" as globals %}
-{% set repayment = globals.repayments[data.breadcrumbs.repaymentDetails.id] %}
+{# Template overrides #}
+{% extends "layout.html" %}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{# Import macros #}
+{% from 'multiple-advances-v1/macros/header.njk' import header as header %}
+{% from 'multiple-advances-v1/macros/breadcrumbs.njk' import breadcrumbs as breadcrumbs %}
 
 
 {% set debtRows = [] %}
+{% set totalRepayment = 0 %}
 
-{% for debt in globals.debts %}
+{% for debt in Debts %}
   {% set debtRows = (debtRows.push(
     [{
-      html: '<a href="../debt-details/' + (loop.index - 1) + '" class="govuk-link">' + debt.description + '</a>' 
+      html: '<a href="../debt-details/' + debt.id + '" class="govuk-link">' + debt.title + '</a>' 
     },
     {
-      text: "£" + ( repayment.amount / globals.debts.length ).toFixed(2),
+      text: "£" + debt.amount.toFixed(2),
       format: "numeric"
     }]), debtRows) %}
   
+  {% set totalRepayment = totalRepayment + debt.amount %}
 {% endfor %}
 
-{% extends "layout_unbranded.html" %}
-
-{% block beforeContent %}
-  {% include "includes/multiple-advances-1/breadcrumbs.html" %}
-{% endblock %}
 
 {% block content %}
-
+{{ breadcrumbs(links=Breadcrumbs) }}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
  
-      {% include "includes/multiple-advances-1/citizen-header.html" %}
+      {{ header(name=Person.name, nino=Person.nino, onBenefit=Person.onBenefit, benefits=Person.benefits) }}
 
       <section class="section">
         <h2 class="govuk-heading-m">
-          {{ repayment.description }}
+          {{ Repayment.description }}
         </h2>
         <dl class="govuk-clearfix govuk-section-break--l  ">
           <div class="key-values govuk-grid-column-one-third">
             <dt class="govuk-caption-m govuk-!-margin-bottom-0">Repayment amount</dt>
-            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ repayment.amount.toFixed(2) }}</dd>
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ totalRepayment.toFixed(2) }}</dd>
           </div>
         </dl>
 
@@ -52,7 +55,7 @@
                       class: "govuk-table__header"
                     },
                     value: {
-                      text: repayment.date,
+                      text: Repayment.date,
                       format: "numeric"
                     }
                   }
@@ -83,7 +86,7 @@
               }
             ],
 
-            rows: debtRows
+            rows: debtRows | reverse
           }) }}
         </section>
     </div>

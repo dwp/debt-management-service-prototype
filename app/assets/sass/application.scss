@@ -14,7 +14,32 @@ $govuk-assets-path: '/govuk/assets/';
 @import "patterns/task-list";
 @import "patterns/related-items";
 
+// Experimental Patterns
+@import "patterns/key-details"; //https://dwp-design-examples.herokuapp.com/example/key-details-bar
+
 // Components that aren't in Frontend
 @import "components/cookie-banner";
 
 // Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
+
+// custom settings
+@import "settings/wireframe-settings";
+
+// custom helpers
+@import "helpers/default-helpers";
+@import "helpers/wireframe-helpers";
+
+// custom base styles
+@import "base/wireframe-base";
+@import "base/block";
+@import "base/links";
+
+// custom components
+@import "components/card";
+@import "components/sum";
+@import "components/table";
+@import "components/summary";
+@import "components/key-values";
+@import "components/activity";
+
+

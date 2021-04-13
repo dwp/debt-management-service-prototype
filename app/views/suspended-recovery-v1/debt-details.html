@@ -1,20 +1,24 @@
-{% from 'multiple-advances-2/macros/header.njk' import header as header %}
-{% from 'multiple-advances-2/macros/breadcrumbs.njk' import breadcrumbs as breadcrumbs %}
+{# Template overrides #}
+{% extends "layout.html" %}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
 
-{% extends "layout_unbranded.html" %}
+{# Import macros #}
+{% from 'multiple-advances-v1/macros/header.njk' import header as header %}
+{% from 'multiple-advances-v1/macros/breadcrumbs.njk' import breadcrumbs as breadcrumbs %}
+
 
 {% set totalRepaid = 0 %}
-
 {% set repaymentRows = [] %}
 
 {% for repayment in Repayments %}
 
     {% set repaymentRows = (repaymentRows.push(
         [{
-        text: repayment.date 
+          text: repayment.date 
         },
         {
-        html: '<a href="../repayment-details/' + repayment.id + '" class="govuk-link">' + repayment.method + '</a>' 
+          html: '<a href="../repayment-details/' + repayment.id + '" class="govuk-link">' + repayment.method + '</a>' 
         },
         {
         text: "£" + repayment.amount.toFixed(2),
@@ -24,10 +28,6 @@
     {% set totalRepaid = totalRepaid + repayment.amount %}
 {% endfor %}
 
-{% block beforeContent %}
-  {# {% include "includes/multiple-advances-1/breadcrumbs.html" %} #}
-  
-{% endblock %}
 
 {% block content %}
 {{ breadcrumbs(links=Breadcrumbs) }}

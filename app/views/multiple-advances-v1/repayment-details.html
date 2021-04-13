@@ -1,7 +1,11 @@
-{% from 'multiple-advances-2/macros/header.njk' import header as header %}
-{% from 'multiple-advances-2/macros/breadcrumbs.njk' import breadcrumbs as breadcrumbs %}
+{# Template overrides #}
+{% extends "layout.html" %}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
 
-{% extends "layout_unbranded.html" %}
+{# Import macros #}
+{% from 'multiple-advances-v1/macros/header.njk' import header as header %}
+{% from 'multiple-advances-v1/macros/breadcrumbs.njk' import breadcrumbs as breadcrumbs %}
 
 
 {% set debtRows = [] %}
@@ -20,11 +24,6 @@
   {% set totalRepayment = totalRepayment + debt.amount %}
 {% endfor %}
 
-
-
-{# {% block beforeContent %}
-  {% include "includes/multiple-advances-1/breadcrumbs.html" %}
-{% endblock %} #}
 
 {% block content %}
 {{ breadcrumbs(links=Breadcrumbs) }}

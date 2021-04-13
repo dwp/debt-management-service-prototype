@@ -24,6 +24,30 @@ router.use('/', (req, res, next) => {
     next();
 });
 
+// =========== Set scenario and version for templates ===================
+
+// get the scenario
+router.param('scenario', function (req, res, next, scenario) {
+    
+    if (scenario) {
+        req.scenario = scenario
+        next()
+    } else {
+        next(new Error('failed to set scenario'))
+    }
+})
+
+//get the scenario version
+router.param('versionId', function (req, res, next, versionId) {
+
+    if (versionId) {
+        req.versionId = versionId
+        next()
+    } else {
+        next(new Error('failed to set scenario version'))
+    }
+})
+
 // =========== Get details based on router params ===================
 
 // get the person details from the session data and attach it to the request object
@@ -103,10 +127,10 @@ router.param('repaymentId', function (req, res, next, repaymentId) {
     }
 })
 
-// =========== Routes ===================
+// =========== Multiple Advances v1 Routes ===================
 
 // get person summary
-router.get('/multiple-advances-2/person/:personId', function (req, res, next) {
+router.get('/multiple-advances-v1/person/:personId', function (req, res, next) {
 
     // reset breadcrumbs as this is current start
     req.session.data.breadcrumbs = {};
@@ -116,7 +140,7 @@ router.get('/multiple-advances-2/person/:personId', function (req, res, next) {
         text: 'Debt Summary', 
         url: req.originalUrl };
 
-    res.render('multiple-advances-2/debt-summary.html', {
+    res.render('multiple-advances-v1/debt-summary.html', {
         Person: req.person,
         Breadcrumbs: req.session.data.breadcrumbs
     });
@@ -125,7 +149,7 @@ router.get('/multiple-advances-2/person/:personId', function (req, res, next) {
 //myArray.filter(x => x.id === '45').map(x => x.debts);
 
 // get debt details
-router.get('/multiple-advances-2/person/:personId/debt-details/:debtId', function (req, res, next) {
+router.get('/multiple-advances-v1/person/:personId/debt-details/:debtId', function (req, res, next) {
  
     // if already visited the debt details page, remove it from breadcrumbs
     if ( 'debtDetails' in req.session.data.breadcrumbs) {
@@ -137,7 +161,7 @@ router.get('/multiple-advances-2/person/:personId/debt-details/:debtId', functio
         text: req.debt.title, 
         url: req.originalUrl };
 
-    res.render('multiple-advances-2/debt-details.html', {
+    res.render('multiple-advances-v1/debt-details.html', {
         Person: req.person,
         Debt: req.debt,
         Repayments: req.repayments,
@@ -146,7 +170,7 @@ router.get('/multiple-advances-2/person/:personId/debt-details/:debtId', functio
 })
 
 // get repayment details
-router.get('/multiple-advances-2/person/:personId/repayment-details/:repaymentId', function (req, res, next) {
+router.get('/multiple-advances-v1/person/:personId/repayment-details/:repaymentId', function (req, res, next) {
 
     // if already visited the repayemt details page, remove it from breadcrumbs
     if ( 'repaymentDetails' in req.session.data.breadcrumbs) {
@@ -157,12 +181,99 @@ router.get('/multiple-advances-2/person/:personId/repayment-details/:repaymentId
         text: req.repayment.method + ' - ' + req.repayment.date, 
         url: req.originalUrl };
 
-    res.render('multiple-advances-2/repayment-details.html', {
+    res.render('multiple-advances-v1/repayment-details.html', {
         Person: req.person,
         Repayment: req.repayment,
         Debts: req.debts,
         Breadcrumbs: req.session.data.breadcrumbs
     });
 })
+
+// =========== Dynamic Routes ===================
+
+// get person summary
+router.get('/scenario/:scenario/v/:versionId/person/:personId', function (req, res, next) {
+
+    // set path for the senario's templates
+    req.scenarioPath = req.scenario + '-v' + req.versionId + '/'
+
+    // reset breadcrumbs as this is current start
+    req.session.data.breadcrumbs = {};
+
+    // add summary to breadcrumbs
+    req.session.data.breadcrumbs.debtSummary = {
+        text: 'Debt Summary', 
+        url: res.locals.currentURL };
+
+        
+
+    res.render( req.scenarioPath + 'debt-summary.html', {
+        Person: req.person,
+        Breadcrumbs: req.session.data.breadcrumbs,
+        ScenarioPath: req.scenarioPath
+    });
+})
+
+//myArray.filter(x => x.id === '45').map(x => x.debts);
+
+// get debt details
+router.get('/scenario/:scenario/v/:versionId/person/:personId/debt-details/:debtId', function (req, res, next) {
+ 
+
+    // set path for the senario's templates
+    req.scenarioPath = req.scenario + '-v' + req.versionId + '/'
+
+    // if already visited the debt details page, remove it from breadcrumbs
+    if ( 'debtDetails' in req.session.data.breadcrumbs) {
+        delete req.session.data.breadcrumbs.debtDetails
+    } 
+
+    // add debt details to breadcrumbs
+    req.session.data.breadcrumbs.debtDetails = { 
+        text: req.debt.title, 
+        url: res.locals.currentURL };
+
+    res.render( req.scenarioPath + 'debt-details.html', {
+        Person: req.person,
+        Debt: req.debt,
+        Repayments: req.repayments,
+        Breadcrumbs: req.session.data.breadcrumbs,
+        ScenarioPath: req.scenarioPath
+    });
+})
+
+// get repayment details
+router.get('/scenario/:scenario/v/:versionId/person/:personId/repayment-details/:repaymentId', function (req, res, next) {
+
+    // set path for the senario's templates
+    req.scenarioPath = req.scenario + '-v' + req.versionId + '/'
+
+    // if already visited the repayemt details page, remove it from breadcrumbs
+    if ( 'repaymentDetails' in req.session.data.breadcrumbs) {
+        delete req.session.data.breadcrumbs.repaymentDetails
+    } 
+    // add repayment details to breadcrumbs
+    req.session.data.breadcrumbs.repaymentDetails = { 
+        text: req.repayment.method + ' - ' + GetFormattedDate(req.repayment.datetime), 
+        url: res.locals.currentURL };
+
+    res.render( req.scenarioPath + 'repayment-details.html', {
+        Person: req.person,
+        Repayment: req.repayment,
+        Debts: req.debts,
+        Breadcrumbs: req.session.data.breadcrumbs,
+        ScenarioPath: req.scenarioPath
+    });
+})
+
+function GetFormattedDate(datetime) {
+    const date = new Date(datetime);
+
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const year = date.getFullYear();
+
+    return month + "/" + day + "/" + year;
+}
 
 module.exports = router
