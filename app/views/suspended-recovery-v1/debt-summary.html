@@ -32,7 +32,7 @@
 
   {% set debtRows = (debtRows.push(
     [{
-      html: '<a href="./debt-details/' + debt.id + '" class="govuk-link">' + debt.title + '</a>' 
+      html: '<a href="' + Breadcrumbs.debtSummary.url + '/debt-details/' + debt.id + '" class="govuk-link">' + debt.title + '</a>' 
     },
     {
       text: "£" + debt.originalBalance.toFixed(2),
@@ -64,7 +64,7 @@
         text: repayment.datetime | date
         },
         {
-        html: '<a href="./repayment-details/' + repayment.id + '" class="govuk-link">' + repayment.method + '</a>' 
+        html: '<a href="' + Breadcrumbs.debtSummary.url + '/repayment-details/' + repayment.id + '" class="govuk-link">' + repayment.method + '</a>' 
         },
         {
         text: "£" + totalRepayment.toFixed(2),
@@ -75,7 +75,7 @@
 {% endfor %}
 
 {% block header %}
-  {{ keyDetails() }}
+  {{ keyDetails(Person) }}
 {% endblock %}
 
 {% block content %}
@@ -84,8 +84,6 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
  
-        {{ header(name=Person.name, nino=Person.nino, onBenefit=Person.onBenefit, benefits=Person.benefits) }}
-        
         <section class="section">
         <h2 class="govuk-heading-m">
           Debt overview

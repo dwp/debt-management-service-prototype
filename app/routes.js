@@ -80,7 +80,7 @@ router.param('debtId', function (req, res, next, debtId) {
                 if ( allocation.debtId == debt.id ) {
                     repayments.push({
                         'id': repayment.id,
-                        'date': repayment.date,
+                        'datetime': repayment.datetime,
                         'method': repayment.method, 
                         'amount': allocation.amount});
                 }

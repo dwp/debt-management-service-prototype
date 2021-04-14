@@ -11,22 +11,26 @@
 {% set totalRepaid = 0 %}
 {% set repaymentRows = [] %}
 
-{% for repayment in Repayments %}
+{% for repayment in Repayments | sort(true, true, 'datetime') %}
 
-    {% set repaymentRows = (repaymentRows.push(
+     {% set repaymentRows = (repaymentRows.push(
         [{
-          text: repayment.date 
+          text: repayment.datetime | date
         },
         {
-          html: '<a href="../repayment-details/' + repayment.id + '" class="govuk-link">' + repayment.method + '</a>' 
+          html: '<a href="' + Breadcrumbs.debtSummary.url + '/repayment-details/' + repayment.id + '" class="govuk-link">' + repayment.method + '</a>' 
         },
         {
         text: "£" + repayment.amount.toFixed(2),
         format: "numeric"
-        }]), repaymentRows) %}
+        }]), repaymentRows) %} 
+
+
 
     {% set totalRepaid = totalRepaid + repayment.amount %}
 {% endfor %}
+
+
 
 
 {% block content %}
@@ -67,7 +71,7 @@
                       class: "govuk-table__header"
                     },
                     value: {
-                      text: Debt.debtStart,
+                      text: Debt.debtStart | date,
                       format: "numeric"
                     }
                   },
@@ -76,9 +80,11 @@
                       text: "Next repayment due"
                     },
                     value: {
-                      text: "12/03/2021"
+                      text: Debt.debtNextPayment | date,
+                      format: "numeric"
                     }
                   }
+                
                 ]
               }) }}  
           </div>

@@ -15,7 +15,7 @@
 
     {% set repaymentRows = (repaymentRows.push(
         [{
-          text: repayment.date 
+          text: repayment.datetime 
         },
         {
           html: '<a href="../repayment-details/' + repayment.id + '" class="govuk-link">' + repayment.method + '</a>' 

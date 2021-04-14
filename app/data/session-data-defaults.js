@@ -81,7 +81,7 @@ module.exports = {
       "repayments": [
         {
           "id": 1,
-          "date": "12/02/2021",
+          "datetime": "12/02/2021",
           "method": "Universal Credit Deduction",
           "allocations": [
             {
@@ -100,7 +100,7 @@ module.exports = {
         },
         {
           "id": 2,
-          "date": "12/01/2021",
+          "datetime": "12/01/2021",
           "method": "Universal Credit Deduction",
           "allocations": [
             {
@@ -115,7 +115,7 @@ module.exports = {
         },
         {
           "id": 3,
-          "date": "12/12/2020",
+          "datetime": "12/12/2020",
           "method": "Universal Credit Deduction",
           "allocations": [
             {
@@ -130,7 +130,7 @@ module.exports = {
         },
         {
           "id": 4,
-          "date": "12/11/2020",
+          "datetime": "12/11/2020",
           "method": "Universal Credit Deduction",
           "allocations": [
             {
@@ -145,7 +145,7 @@ module.exports = {
         },
         {
           "id": 5,
-          "date": "12/10/2020",
+          "datetime": "12/10/2020",
           "method": "Universal Credit Deduction",
           "allocations": [
             {
@@ -160,7 +160,7 @@ module.exports = {
         },
         {
           "id": 6,
-          "date": "12/09/2020",
+          "datetime": "12/09/2020",
           "method": "Universal Credit Deduction",
           "allocations": [
             {
@@ -175,7 +175,7 @@ module.exports = {
         },
         {
           "id": 7,
-          "date": "12/08/2020",
+          "datetime": "12/08/2020",
           "method": "Universal Credit Deduction",
           "allocations": [
             {
@@ -217,7 +217,8 @@ module.exports = {
           "id": 1,
           "title": "Universal Credit Advance (New Claims)",
           "originalBalance": 409.89,
-          "debtStart": "2020-09-11T23:59:59.000Z"
+          "debtStart": "2020-09-11T23:59:59.000Z",
+          "debtNextPayment": "2021-05-14T23:59:59.000Z"
         },
         {
           "id": 2,

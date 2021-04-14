@@ -5,6 +5,10 @@
 
 $white-transparent: rgba(255, 255, 255, .3);
 
+section.key-details-bar {
+  padding-bottom: 0;
+}
+
 .key-details-bar {
   @include govuk-font(19, $weight: normal);
   background-color: govuk-colour("blue");
@@ -107,6 +111,19 @@ $white-transparent: rgba(255, 255, 255, .3);
         clear: both;
         margin-top: 5px;
       }
+    }
+
+    .key-details-bar__bottom-block-status {
+      .key-details-bar__status {
+        float:left;
+        margin-right: govuk-spacing(5);
+      }
+
+      dd,
+      dt {
+        margin-top: govuk-spacing(1);
+      }
+
     }
   }
 }
