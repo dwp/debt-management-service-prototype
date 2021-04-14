@@ -20,3 +20,12 @@
         padding-left: 0;
     }
 }
+
+.key-values--grey {
+    border-left-color: govuk-colour("dark-grey");
+    background: rgba(govuk-colour("dark-grey"), 0.05);
+
+    .key-values-col {
+        border-left-color: govuk-colour("dark-grey");
+    }
+}

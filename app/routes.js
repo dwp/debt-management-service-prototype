@@ -205,8 +205,6 @@ router.get('/scenario/:scenario/v/:versionId/person/:personId', function (req, r
         text: 'Debt Summary', 
         url: res.locals.currentURL };
 
-        
-
     res.render( req.scenarioPath + 'debt-summary.html', {
         Person: req.person,
         Breadcrumbs: req.session.data.breadcrumbs,

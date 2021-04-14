@@ -217,13 +217,15 @@ module.exports = {
           "id": 1,
           "title": "Universal Credit Advance (New Claims)",
           "originalBalance": 409.89,
+          "status": "recovery",
           "debtStart": "2020-09-11T23:59:59.000Z",
-          "debtNextPayment": "2021-05-14T23:59:59.000Z"
+          "debtNextPayment": "2021-05-14T23:59:59.000Z",
         },
         {
           "id": 2,
           "title": "Universal Credit Overpayment",
           "originalBalance": 208.89,
+          "status": "hold",
           "debtStart": "2021-04-30T23:59:59.000Z"
         }
       ],

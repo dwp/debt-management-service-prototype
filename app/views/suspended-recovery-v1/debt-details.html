@@ -45,7 +45,34 @@
         <h2 class="govuk-heading-m">
           {{ Debt.title }}
         </h2>
-        <dl class="govuk-clearfix govuk-section-break--l key-values ">
+
+        {% if Debt.status == 'recovery' %} 
+          <strong class="govuk-tag">In recovery</strong>
+          {% set statusStyle = '' %}
+        {% elseif Debt.status == 'hold' %}
+          {% set statusStyle = 'key-values--grey' %}
+          
+          <strong class="govuk-tag govuk-tag--grey">On hold</strong>
+          <p class="govuk-!-margin-top-4">This is some placeholder text to explain to the agent that this debt is hold because there is no current functionality to allow this debt to be recovered.</p>
+
+          <div class="hmcts-banner">
+            <svg class="hmcts-banner__icon" fill="currentColor" role="presentation" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" height="25" width="25">
+            <path d="M13.7,18.5h-2.4v-2.4h2.4V18.5z M12.5,13.7c-0.7,0-1.2-0.5-1.2-1.2V7.7c0-0.7,0.5-1.2,1.2-1.2s1.2,0.5,1.2,1.2v4.8
+            C13.7,13.2,13.2,13.7,12.5,13.7z M12.5,0.5c-6.6,0-12,5.4-12,12s5.4,12,12,12s12-5.4,12-12S19.1,0.5,12.5,0.5z" /></svg>
+
+            <div class="hmcts-banner__message">
+              <span class="hmcts-banner__assistive">information</span>
+              <h3 class="govuk-heading-s">Communication Guidance</h3>
+              <p>This is a placeholder for some guidance aimed at agents. The message should relay what to communicate to citizens so they know why their debt is on hold i.e. due to current functionality and that the debt will be collected in future.</p>
+              <p>Additionally, there may be options the agent may need to communicate to the citizen.</p>
+            </div>
+          </div>
+
+          
+           <hr>
+        {% endif %}
+
+        <dl class="govuk-clearfix govuk-section-break--l key-values {{ statusStyle }}">
           <div class="key-values-col govuk-grid-column-one-third">
             <dt class="govuk-caption-m govuk-!-margin-bottom-0">Original balance</dt>
             <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ Debt.originalBalance.toFixed(2) }}</dd>
@@ -62,32 +89,28 @@
 
         <div class="govuk-clearfix govuk-!-margin-top-5">
           <div class="govuk-grid-column-one-half govuk-!-padding-left-0">    
-            
-            {{ govukSummaryList({
-                classes: 'govuk-summary-list--no-border govuk-!-margin-bottom-0',
-                rows: [              
-                  {
-                    key: {
-                      text: "Advance received",
-                      class: "govuk-table__header"
-                    },
-                    value: {
-                      text: Debt.debtStart | date,
-                      format: "numeric"
-                    }
-                  },
-                  {
-                    key: {
-                      text: "Next repayment due"
-                    },
-                    value: {
-                      text: Debt.debtNextPayment | date,
-                      format: "numeric"
-                    }
-                  }
-                
-                ]
-              }) }}  
+            <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-0">
+
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Advance received
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ Debt.debtStart | date }}
+                  </dd>
+                </div>
+
+                {% if Debt.debtNextPayment %}
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      Next repayment due
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                      {{ Debt.debtNextPayment | date }}
+                    </dd>
+                  </div>
+                {% endif %}
+            </dl>
           </div>
         </div>
       </section>
@@ -98,27 +121,30 @@
         <h2 class="card-title govuk-heading-m govuk-!-font-weight-regular">
           Repayment history
         </h2>
-
-        {{ govukTable({
-            classes: "",
-            firstCellIsHeader: false,
-            
-            head: [
-              {
-                text: "Date"
-              },
+        {% if Repayments.length > 0 %}
+          {{ govukTable({
+              classes: "",
+              firstCellIsHeader: false,
               
-              {
-                text: "Repayment Method"
-              },
-              {
-                text: "Amount",
-                format: "numeric"
-              }
-            ],
+              head: [
+                {
+                  text: "Date"
+                },
+                
+                {
+                  text: "Repayment Method"
+                },
+                {
+                  text: "Amount",
+                  format: "numeric"
+                }
+              ],
 
-            rows: repaymentRows
-          }) }}
+              rows: repaymentRows
+            }) }}
+          {% else %}
+            <p class="govuk-!-font-weight-bold">No repayments received.</p>
+          {% endif %}
         </section>
     </div>
     

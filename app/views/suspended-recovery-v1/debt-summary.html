@@ -17,21 +17,31 @@
 
 {% for debt in Person.debts | sort(true, true, 'debtStart') %}
 
-    {% set repaid = 0 %}
-    
-    {% for repayment in Person.repayments %}
-        {% for allocation in repayment.allocations %}
-        
-            {% if allocation.debtId == debt.id %}
-                {% set repaid = repaid + allocation.amount %}
-            {% endif %}
+  {% set repaid = 0 %}
+  
+  {% for repayment in Person.repayments %}
+      {% for allocation in repayment.allocations %}
+      
+          {% if allocation.debtId == debt.id %}
+              {% set repaid = repaid + allocation.amount %}
+          {% endif %}
 
-        {% endfor %}
-    {% endfor %}
+      {% endfor %}
+  {% endfor %}
+
+  {% if debt.status == 'recovery' %} 
+    {% set status = '<strong class="govuk-tag">In recovery</strong>' %}
+    {% set totalBalance = totalBalance + debt.originalBalance %}
+  {% elseif debt.status == 'hold' %}
+    {% set status = '<strong class="govuk-tag govuk-tag--grey">On hold</strong>' %}
+  {% endif %}
 
   {% set debtRows = (debtRows.push(
     [{
       html: '<a href="' + Breadcrumbs.debtSummary.url + '/debt-details/' + debt.id + '" class="govuk-link">' + debt.title + '</a>' 
+    },
+    {
+      html: status
     },
     {
       text: "£" + debt.originalBalance.toFixed(2),
@@ -46,7 +56,7 @@
       format: "numeric"
     }]), debtRows) %}
 
-  {% set totalBalance = totalBalance + debt.originalBalance %}
+  
   
 {% endfor %}
 
@@ -60,14 +70,14 @@
 
     {% set repaymentRows = (repaymentRows.push(
         [{
-        text: repayment.datetime | date
+          text: repayment.datetime | date
         },
         {
-        html: '<a href="' + Breadcrumbs.debtSummary.url + '/repayment-details/' + repayment.id + '" class="govuk-link">' + repayment.method + '</a>' 
+          html: '<a href="' + Breadcrumbs.debtSummary.url + '/repayment-details/' + repayment.id + '" class="govuk-link">' + repayment.method + '</a>' 
         },
         {
-        text: "£" + totalRepayment.toFixed(2),
-        format: "numeric"
+          text: "£" + totalRepayment.toFixed(2),
+          format: "numeric"
         }]), repaymentRows) %}
 
     {% set totalRepaid = totalRepaid + totalRepayment %}
@@ -118,15 +128,18 @@
                 text: "Description"
               },
               {
+                text: ""
+              },
+              {
                 text: "Original balance",
                 format: "numeric"
               },
               {
-                text: "Amount repaid",
+                text: "Repaid",
                 format: "numeric"
               },
               {
-                text: "Amount owed",
+                text: "Owed",
                 format: "numeric"
               }
 
