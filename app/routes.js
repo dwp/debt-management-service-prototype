@@ -267,11 +267,14 @@ router.get('/scenario/:scenario/v/:versionId/person/:personId/repayment-details/
 function GetFormattedDate(datetime) {
     const date = new Date(datetime);
 
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var year = date.getFullYear();
 
-    return month + "/" + day + "/" + year;
+    month = month < 10 ? '0' + month : month;
+    day = day < 10 ? '0' + day : day;
+
+    return day + "/" + month + "/" + year;
 }
 
 module.exports = router
