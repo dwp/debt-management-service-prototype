@@ -78,11 +78,11 @@
             <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ Debt.originalBalance.toFixed(2) }}</dd>
           </div>
           <div class="key-values-col govuk-grid-column-one-third">
-            <dt class="govuk-caption-m govuk-!-margin-bottom-0">Amount repaid</dt>
+            <dt class="govuk-caption-m govuk-!-margin-bottom-0">Repaid</dt>
             <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ totalRepaid.toFixed(2) }}</dd>
           </div>
           <div class="key-values-col govuk-grid-column-one-third">
-            <dt class="govuk-caption-m govuk-!-margin-bottom-0">Amount owed</dt>
+            <dt class="govuk-caption-m govuk-!-margin-bottom-0">Owed</dt>
             <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ (Debt.originalBalance - totalRepaid).toFixed(2) }}</dd>
           </div> 
         </dl>
@@ -93,7 +93,7 @@
 
                 <div class="govuk-summary-list__row">
                   <dt class="govuk-summary-list__key">
-                    Advance received
+                    Overpayment received
                   </dt>
                   <dd class="govuk-summary-list__value">
                     {{ Debt.debtStart | date }}
