@@ -11,8 +11,9 @@
 
 {% set debtRows = [] %}
 {% set repaymentRows = [] %}
-{% set totalBalance = 0 %}
+{% set totalRecoverableBalance = 0 %}
 {% set totalRepaid = 0 %}
+{% set totalUnrecoverableRepaid = 0 %}
 
 
 {% for debt in Person.debts | sort(true, true, 'debtStart') %}
@@ -29,11 +30,12 @@
       {% endfor %}
   {% endfor %}
 
-  {% if debt.status == 'recovery' %} 
+  {% if debt.status == 'recover' %} 
     {% set status = '<strong class="govuk-tag">In recovery</strong>' %}
-    {% set totalBalance = totalBalance + debt.originalBalance %}
+    {% set totalRecoverableBalance = totalRecoverableBalance + debt.originalBalance %}
   {% elseif debt.status == 'hold' %}
     {% set status = '<strong class="govuk-tag govuk-tag--grey">On hold</strong>' %}
+    {% set totalUnrecoverableRepaid = totalUnrecoverableRepaid + repaid %}
   {% endif %}
 
   {% set debtRows = (debtRows.push(
@@ -55,8 +57,6 @@
       text: "£" + (debt.originalBalance - repaid).toFixed(2),
       format: "numeric"
     }]), debtRows) %}
-
-  
   
 {% endfor %}
 
@@ -95,24 +95,22 @@
  
         <section class="section">
         <h2 class="govuk-heading-m">
-          Debt overview
+          Debts in recovery
         </h2>
         <dl class="govuk-clearfix govuk-section-break--l key-values ">
           <div class="key-values-col govuk-grid-column-one-third">
-            <dt class="govuk-caption-m govuk-!-margin-bottom-0">Total balance</dt>
-            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ totalBalance.toFixed(2) }}</dd>
+            <dt class="govuk-caption-m govuk-!-margin-bottom-0">Balance</dt>
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ totalRecoverableBalance.toFixed(2) }}</dd>
           </div>
           <div class="key-values-col govuk-grid-column-one-third">
-            <dt class="govuk-caption-m govuk-!-margin-bottom-0">Total repaid</dt>
-            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ totalRepaid.toFixed(2) }}</dd>
+            <dt class="govuk-caption-m govuk-!-margin-bottom-0">Repaid</dt>
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ (totalRepaid - totalUnrecoverableRepaid).toFixed(2) }}</dd>
           </div>
           <div class="key-values-col govuk-grid-column-one-third">
-            <dt class="govuk-caption-m govuk-!-margin-bottom-0">Total owed</dt>
-            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ (totalBalance - totalRepaid).toFixed(2) }}</dd>
+            <dt class="govuk-caption-m govuk-!-margin-bottom-0">Owed</dt>
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ ((totalRecoverableBalance - totalRepaid) + totalUnrecoverableRepaid).toFixed(2) }}</dd>
           </div>
         </dl>
-
- 
 
         <div class="govuk-clearfix govuk-!-margin-top-9">
           <h3 class="govuk-heading-m govuk-!-font-weight-regular">

@@ -3,6 +3,7 @@
         "*.html": "njk"
     },
     "emmet.includeLanguages": {
-        "njk": "html"
+        "njk": "html",
+        "nunjucks": "html"
     }
 }

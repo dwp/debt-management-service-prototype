@@ -46,7 +46,7 @@
           {{ Debt.title }}
         </h2>
 
-        {% if Debt.status == 'recovery' %} 
+        {% if Debt.status == 'recover' %} 
           <strong class="govuk-tag">In recovery</strong>
           {% set statusStyle = '' %}
         {% elseif Debt.status == 'hold' %}
