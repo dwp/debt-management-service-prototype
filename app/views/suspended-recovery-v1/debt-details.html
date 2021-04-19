@@ -52,21 +52,8 @@
         {% elseif Debt.status == 'hold' %}
           {% set statusStyle = 'key-values--grey' %}
           
-          <strong class="govuk-tag govuk-tag--grey">On hold</strong>
-          <p class="govuk-!-margin-top-4">This is some placeholder text to explain to the agent that this debt is hold because there is no current functionality to allow this debt to be recovered.</p>
-
-          <div class="hmcts-banner">
-            <svg class="hmcts-banner__icon" fill="currentColor" role="presentation" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" height="25" width="25">
-            <path d="M13.7,18.5h-2.4v-2.4h2.4V18.5z M12.5,13.7c-0.7,0-1.2-0.5-1.2-1.2V7.7c0-0.7,0.5-1.2,1.2-1.2s1.2,0.5,1.2,1.2v4.8
-            C13.7,13.2,13.2,13.7,12.5,13.7z M12.5,0.5c-6.6,0-12,5.4-12,12s5.4,12,12,12s12-5.4,12-12S19.1,0.5,12.5,0.5z" /></svg>
-
-            <div class="hmcts-banner__message">
-              <span class="hmcts-banner__assistive">information</span>
-              <h3 class="govuk-heading-s">Communication Guidance</h3>
-              <p>This is a placeholder for some guidance aimed at agents. The message should relay what to communicate to citizens so they know why their debt is on hold i.e. due to current functionality and that the debt will be collected in future.</p>
-              <p>Additionally, there may be options the agent may need to communicate to the citizen.</p>
-            </div>
-          </div>
+          <strong class="govuk-tag govuk-tag--grey">On hold - functionality</strong>
+          <p class="govuk-!-margin-top-4">This is debt is on hold. Awaiting functionality for this debt to be recovered.</p>
           
            <hr>
         {% endif %}
@@ -98,6 +85,17 @@
                     {{ Debt.debtStart | date }}
                   </dd>
                 </div>
+
+                {% if Debt.overpaymentStart and Debt.overpaymentEnd %}
+                  <div class="govuk-summary-list__row">
+                     <dt class="govuk-summary-list__key">
+                      Overpayment period
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                      {{ Debt.overpaymentStart | date }} - {{ Debt.overpaymentEnd | date }}
+                    </dd>
+                  </div>
+                {% endif %}
 
                 {% if Debt.debtNextPayment %}
                   <div class="govuk-summary-list__row">

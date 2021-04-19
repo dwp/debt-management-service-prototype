@@ -34,7 +34,7 @@
     {% set status = '<strong class="govuk-tag">In recovery</strong>' %}
     {% set totalRecoverableBalance = totalRecoverableBalance + debt.originalBalance %}
   {% elseif debt.status == 'hold' %}
-    {% set status = '<strong class="govuk-tag govuk-tag--grey">On hold</strong>' %}
+    {% set status = '<strong class="govuk-tag govuk-tag--grey">On hold - functionality</strong>' %}
     {% set totalUnrecoverableRepaid = totalUnrecoverableRepaid + repaid %}
   {% endif %}
 

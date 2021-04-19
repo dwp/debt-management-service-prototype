@@ -226,7 +226,9 @@ module.exports = {
           "title": "Universal Credit Overpayment",
           "originalBalance": 208.89,
           "status": "hold",
-          "debtStart": "2021-04-30T23:59:59.000Z"
+          "debtStart": "2021-04-30T23:59:59.000Z",
+          "overpaymentStart": "2021-04-16T23:59:59.000Z",
+          "overpaymentEnd": "2021-05-16T23:59:59.000Z"
         }
       ],
       "repayments": [
