@@ -16,7 +16,7 @@
 {% set totalUnrecoverableRepaid = 0 %}
 
 
-{% for debt in Person.debts | sort(true, true, 'debtStart') %}
+{% for debt in Person.debts | sort(true, true, 'id') %}
 
   {% set repaid = 0 %}
   

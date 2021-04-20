@@ -77,14 +77,16 @@
           <div class="govuk-grid-column-one-half govuk-!-padding-left-0">    
             <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-0">
 
-                <div class="govuk-summary-list__row">
-                  <dt class="govuk-summary-list__key">
-                    Debt received
-                  </dt>
-                  <dd class="govuk-summary-list__value">
-                    {{ Debt.debtStart | date }}
-                  </dd>
-                </div>
+                {% if Debt.advancedReceived %}
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                      Advanced received
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                      {{ Debt.advancedReceived | date }}
+                    </dd>
+                  </div>
+                {% endif %}
 
                 {% if Debt.overpaymentStart and Debt.overpaymentEnd %}
                   <div class="govuk-summary-list__row">
