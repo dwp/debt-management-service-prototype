@@ -1,6 +1,6 @@
 {
     "files.associations": {
-        "*.html": "njk"
+        "*.html": "nunjucks"
     },
     "emmet.includeLanguages": {
         "njk": "html",
