@@ -1,0 +1,23 @@
+{% macro breadcrumbs(links) %}
+
+<div class="govuk-width-container">
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <div class="govuk-breadcrumbs">
+        <ol class="govuk-breadcrumbs__list">
+
+            {% for link, linkProps in links %}
+              {% if not loop.last %}
+                  <li class="govuk-breadcrumbs__list-item">
+                      <a class="govuk-breadcrumbs__link" href="{{ linkProps.url }}">{{ linkProps.text }}</a>
+                  </li>
+              {% endif %}
+            {% endfor %}
+
+        </ol>
+      </div>
+    </div>
+</div>
+</div>
+{% endmacro %}

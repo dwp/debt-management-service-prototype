@@ -1,0 +1,16 @@
+{% macro activity(activity) %}
+
+<li class="dwp-timeline__entry">
+    <h3 class="dwp-timeline__title govuk-heading-s govuk-!-margin-bottom-0">{{activity.title}}</h3>
+    <p class="dwp-timeline__info">
+    <span class="govuk-visually-hidden visually-hidden">{{activity.title}}</span>
+    <span class="dwp-timeline__author">by {{activity.activityBy}}</span>
+    <span class="dwp-timeline__date">{{activity.datetime | dateTimeVerbose}}</span>
+    
+    </p>
+    <p class="dwp-timeline__body">
+    {{activity.content}}
+    </p>
+</li>
+
+{% endmacro %}

@@ -4,6 +4,8 @@ $govuk-global-styles: true;
 // We can't mount GOV.UK Frontend's assets at root as it's done automatically by the extensions framework.
 $govuk-assets-path: '/govuk/assets/';
 
+@import 'node_modules/govuk_frontend_toolkit/stylesheets/colours';
+
 // Import GOV.UK Frontend and any extension styles if extensions have been configured
 @import "lib/extensions/extensions";
 
@@ -42,5 +44,6 @@ $govuk-assets-path: '/govuk/assets/';
 @import "components/key-values";
 @import "components/activity";
 @import "components/banner";
+@import "components/timeline";
 
 

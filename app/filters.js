@@ -48,9 +48,15 @@ dateFilter.install();
 dateFilter.setDefaultFormat('DD/MM/YYYY');
 
 filters.date = dateFilter;
+
 filters.dateTimeLong = function(dateTime) {
   return dateFilter(dateTime, "ddd, DD MMM YYYY hh:mm");
 }
+
+filters.dateTimeVerbose = function(dateTime) {
+  return dateFilter(dateTime, "D MMMM YYYY [at] H:mm");
+}
+
 
 
 

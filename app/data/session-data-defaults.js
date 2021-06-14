@@ -203,13 +203,15 @@ module.exports = {
           "id": 1,
           "title": "Universal Credit Advance (New Claims) received",
           "datetime": "2020-09-16T01:44:00.000Z",
-          "content": "Claimant received a New Claims Advance for £409.89"
+          "activityBy": "Automated process",
+          "content": "Claimant received a New Claims Advance for £409.89."
         },
         {
           "id": 2,
           "title": "Universal Credit Overpayment",
           "datetime": "2021-04-30T01:52:00.000Z",
-          "content": "Claimant has a Universal Credit overpayment of £208.89"
+          "activityBy": "Automated process",
+          "content": "Claimant has a Universal Credit overpayment of £208.89."
         }
       ],
       "debts": [
