@@ -1,0 +1,35 @@
+{# Import macros #}
+{% from './status.njk' import status as status %}
+
+{% macro debt(debt, repayments, breadcrumbs) %}
+
+{# Get total paid for repayment from allocations #}
+<tr class="govuk-table__row">
+  <td class="govuk-table__cell" scope="row">
+      {{ debt.accountId }}
+  </td>
+
+  <td class="govuk-table__cell" scope="row">
+    <a href="{{ breadcrumbs }}/debt-details/{{ debt.id }}" class="govuk-link">
+      {{ debt.title }}
+    </a>
+  </td>
+
+  <td class="govuk-table__cell">
+    {{ status( debt.status ) }}
+  </td>
+  
+  <td class="govuk-table__cell govuk-table__cell--numeric">
+    £{{ debt.originalBalance.toFixed(2) }}
+  </td>
+
+  <td class="govuk-table__cell govuk-table__cell--numeric">
+    £{{ debt.repaid.toFixed(2) }}
+  </td>
+
+  <td class="govuk-table__cell govuk-table__cell--numeric">
+    £{{ (debt.originalBalance - debt.repaid).toFixed(2) }}
+  </td>
+</tr>
+
+{% endmacro %}

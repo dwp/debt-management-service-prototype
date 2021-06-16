@@ -1,0 +1,7 @@
+{% macro status(status) %}
+  {% if status == 'recover' %} 
+      <strong class="govuk-tag">In recovery</strong>
+  {% elseif status == 'hold' %}
+      <strong class="govuk-tag govuk-tag--grey">On hold - functionality</strong>
+  {% endif %}  
+{% endmacro %}

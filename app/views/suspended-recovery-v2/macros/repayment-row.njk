@@ -1,0 +1,31 @@
+{% macro repayment(repayment, breadcrumbs) %}
+
+{% set repaid = 0 %}
+
+{# Get total paid for the debt if allocations have already been filtered via route #}
+{% if repayment.amount is defined and not repayment.amount | isEmptyObject %}
+  {% set repaid = repaid + repayment.amount %}
+{% else %} {# else get total paid for repayment from allocations #}
+  {% for allocation in repayment.allocations %}
+    {% set repaid = repaid + allocation.amount %}
+  {% endfor %}
+{% endif %}
+
+
+<tr class="govuk-table__row">
+  <td class="govuk-table__cell" scope="row">
+    {{ repayment.datetime | date }}
+  </td>
+  
+  <td class="govuk-table__cell">
+    <a href="{{ breadcrumbs }}/repayment-details/{{ repayment.id }}" class="govuk-link"> 
+      {{ repayment.method }}
+    </a>
+  </td>
+  
+  <td class="govuk-table__cell govuk-table__cell--numeric">
+    £{{ repaid.toFixed(2) }}
+  </td>
+</tr>
+
+{% endmacro %}

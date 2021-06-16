@@ -6,23 +6,7 @@
 {# Import macros #}
 {% from ScenarioPath + 'macros/key-details.njk' import keyDetails as keyDetails %}
 {% from ScenarioPath + 'macros/breadcrumbs.njk' import breadcrumbs as breadcrumbs %}
-
-
-{% set debtRows = [] %}
-{% set totalRepayment = 0 %}
-
-{% for debt in Debts %}
-  {% set debtRows = (debtRows.push(
-    [{
-      html: '<a href="' + Breadcrumbs.debtSummary.url + '/debt-details/' + debt.id + '" class="govuk-link">' + debt.title + '</a>' 
-    },
-    {
-      text: "£" + debt.amount.toFixed(2),
-      format: "numeric"
-    }]), debtRows) %}
-  
-  {% set totalRepayment = totalRepayment + debt.amount %}
-{% endfor %}
+{% from ScenarioPath + 'macros/repayment-debt-row.njk' import debt as repaymentDebtRow %}
 
 {% block header %}
   {{ keyDetails(Person) }}
@@ -40,7 +24,7 @@
         <dl class="govuk-clearfix govuk-section-break--l  ">
           <div class="key-values govuk-grid-column-one-third">
             <dt class="govuk-caption-m govuk-!-margin-bottom-0">Repayment amount</dt>
-            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ totalRepayment.toFixed(2) }}</dd>
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ Repayment.repaid.toFixed(2) }}</dd>
           </div>
         </dl>
 
@@ -73,22 +57,21 @@
           Repayment allocations
         </h2>
 
-        {{ govukTable({
-            classes: "",
-            firstCellIsHeader: false,
-            
-            head: [
-              {
-                text: "Debt"
-              },
-              {
-                text: "Amount",
-                format: "numeric"
-              }
-            ],
+        <table class="govuk-table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Account number</th>
+                <th scope="col" class="govuk-table__header">Debt</th>
+                <th scope="col" class="govuk-table__header govuk-table__header--numeric">Amount</th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              {% for debt in Debts | sort(true, true, 'id') %}
+                {{ repaymentDebtRow(debt = debt, breadcrumbs = Breadcrumbs.debtSummary.url ) }}
+              {% endfor %} 
+            </tbody>
+          </table>
 
-            rows: debtRows | reverse
-          }) }}
         </section>
     </div>
     

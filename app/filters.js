@@ -57,6 +57,11 @@ filters.dateTimeVerbose = function(dateTime) {
   return dateFilter(dateTime, "D MMMM YYYY [at] H:mm");
 }
 
+// Return false if JSON property is defined but has no value
+filters.isEmptyObject = function(obj) {
+    return JSON.stringify(obj) === "{}";
+}
+
 
 
 

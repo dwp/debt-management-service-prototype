@@ -7,81 +7,9 @@
 {% from ScenarioPath + 'macros/key-details.njk' import keyDetails as keyDetails %}
 {% from ScenarioPath + 'macros/activity.njk' import activity as activityItem %}
 {% from ScenarioPath + 'macros/breadcrumbs.njk' import breadcrumbs as breadcrumbs %}
+{% from ScenarioPath + 'macros/repayment-row.njk' import repayment as repaymentRow %}
+{% from ScenarioPath + 'macros/debt-row.njk' import debt as debtRow %}
 
-
-{% set debtRows = [] %}
-{% set repaymentRows = [] %}
-{% set totalRecoverableBalance = 0 %}
-{% set totalRepaid = 0 %}
-{% set totalUnrecoverableRepaid = 0 %}
-
-
-{% for debt in Person.debts | sort(true, true, 'id') %}
-
-  {% set repaid = 0 %}
-  
-  {% for repayment in Person.repayments %}
-      {% for allocation in repayment.allocations %}
-      
-          {% if allocation.debtId == debt.id %}
-              {% set repaid = repaid + allocation.amount %}
-          {% endif %}
-
-      {% endfor %}
-  {% endfor %}
-
-  {% if debt.status == 'recover' %} 
-    {% set status = '<strong class="govuk-tag">In recovery</strong>' %}
-    {% set totalRecoverableBalance = totalRecoverableBalance + debt.originalBalance %}
-  {% elseif debt.status == 'hold' %}
-    {% set status = '<strong class="govuk-tag govuk-tag--grey">On hold - functionality</strong>' %}
-    {% set totalUnrecoverableRepaid = totalUnrecoverableRepaid + repaid %}
-  {% endif %}
-
-  {% set debtRows = (debtRows.push(
-    [{
-      html: '<a href="' + Breadcrumbs.debtSummary.url + '/debt-details/' + debt.id + '" class="govuk-link">' + debt.title + '</a>' 
-    },
-    {
-      html: status
-    },
-    {
-      text: "£" + debt.originalBalance.toFixed(2),
-      format: "numeric"
-    },
-    {
-      text: "£" + repaid.toFixed(2),
-      format: "numeric"
-    },
-    {
-      text: "£" + (debt.originalBalance - repaid).toFixed(2),
-      format: "numeric"
-    }]), debtRows) %}
-  
-{% endfor %}
-
-{% for repayment in Person.repayments | sort(true, true, 'datetime') %}
-    {% set totalRepayment = 0 %}
-
-    {% for allocation in repayment.allocations %}
-        {% set totalRepayment = totalRepayment + allocation.amount %}
-    {% endfor %}
-
-
-    {% set repaymentRows = (repaymentRows.push(
-        [{
-          text: repayment.datetime | date
-        },
-        {
-          html: '<a href="' + Breadcrumbs.debtSummary.url + '/repayment-details/' + repayment.id + '" class="govuk-link">' + repayment.method + '</a>' 
-        },
-        {
-          text: "£" + totalRepayment.toFixed(2),
-          format: "numeric"
-        }]), repaymentRows) %}
-
-    {% set totalRepaid = totalRepaid + totalRepayment %}
-{% endfor %}
 
 {% block header %}
   {{ keyDetails(Person) }}
@@ -97,18 +25,19 @@
         <h2 class="govuk-heading-m">
           Debts in recovery
         </h2>
+
         <dl class="govuk-clearfix govuk-section-break--l key-values ">
           <div class="key-values-col govuk-grid-column-one-third">
             <dt class="govuk-caption-m govuk-!-margin-bottom-0">Original balance</dt>
-            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ totalRecoverableBalance.toFixed(2) }}</dd>
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ Person.totalRecoverableBalance.toFixed(2) }}</dd>
           </div>
           <div class="key-values-col govuk-grid-column-one-third">
             <dt class="govuk-caption-m govuk-!-margin-bottom-0">Repaid</dt>
-            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ (totalRepaid - totalUnrecoverableRepaid).toFixed(2) }}</dd>
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ Person.totalRepaid.toFixed(2) }}</dd>
           </div>
           <div class="key-values-col govuk-grid-column-one-third">
             <dt class="govuk-caption-m govuk-!-margin-bottom-0">Owed</dt>
-            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ ((totalRecoverableBalance - totalRepaid) + totalUnrecoverableRepaid).toFixed(2) }}</dd>
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ (Person.totalRecoverableBalance - Person.totalRepaid).toFixed(2) }}</dd>
           </div>
         </dl>
 
@@ -117,62 +46,45 @@
             Debts ({{ Person.debts.length }}) 
           </h3>
 
-          {{ govukTable({
-            classes: "",
-            firstCellIsHeader: false,
-            
-            head: [
-              {
-                text: "Description"
-              },
-              {
-                text: ""
-              },
-              {
-                text: "Original balance",
-                format: "numeric"
-              },
-              {
-                text: "Repaid",
-                format: "numeric"
-              },
-              {
-                text: "Owed",
-                format: "numeric"
-              }
-
-            ],
-
-            rows: debtRows
-          }) }}
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Account number</th>
+                <th scope="col" class="govuk-table__header">Description</th>
+                <th scope="col" class="govuk-table__header"></th>
+                <th scope="col" class="govuk-table__header govuk-table__header--numeric">Original balance</th>
+                <th scope="col" class="govuk-table__header govuk-table__header--numeric">Repaid</th>
+                <th scope="col" class="govuk-table__header govuk-table__header--numeric">Owed</th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              {% for debt in Person.debts | sort(true, true, 'id') %}
+                {{ debtRow(debt = debt, repayments = Person.repayments, breadcrumbs = Breadcrumbs.debtSummary.url ) }}
+              {% endfor %} 
+            </tbody>
+          </table>
         </div>
       </section>
 
       <section class="govuk-!-margin-bottom-2">
         <h3 class="govuk-heading-m govuk-!-font-weight-regular">
-          Repayment history</a>
+          Repayment history
         </h3>
 
-        {{ govukTable({
-            classes: "",
-            firstCellIsHeader: false,
-            
-            head: [
-              {
-                text: "Date"
-              },
-              
-              {
-                text: "Repayment Method"
-              },
-              {
-                text: "Amount",
-                format: "numeric"
-              }
-            ],
-
-            rows: repaymentRows
-          }) }}
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Date</th>
+              <th scope="col" class="govuk-table__header">Repayment Method</th>
+              <th scope="col" class="govuk-table__header govuk-table__header--numeric">Amount</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            {% for repayment in Person.repayments | sort(true, true, 'datetime') %}
+              {{ repaymentRow(repayment = repayment, breadcrumbs = Breadcrumbs.debtSummary.url ) }}
+            {% endfor %} 
+          </tbody>
+        </table>
       </section>
 
       <section class="govuk-!-margin-bottom-2">
@@ -184,10 +96,9 @@
 
         <ol class="dwp-timeline">
           {% for activity in Person.activities | sort(true, true, 'datetime') %}
-              {{ activityItem(activity=activity) }}
-          {%endfor%} 
+            {{ activityItem(activity =activity) }}
+          {% endfor %} 
         </ol>
-        
       </section>
 
     </div>

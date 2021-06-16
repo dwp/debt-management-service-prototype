@@ -56,6 +56,38 @@ router.param('personId', function (req, res, next, personId) {
     const person = req.session.data.people.find( ({ id }) => id == personId );
 
     if (person) {
+        person.totalRecoverableBalance = 0;
+        person.totalRepaid = 0;
+
+        // Get total original balance from reoverable debts
+        for (const i in person.debts) {
+            const debt = person.debts[i];
+            debt.repaid = 0;
+
+            // check if debt is recoverable
+            if (debt.status == 'recover') {
+                // add allocation to generate total repaid
+                person.totalRecoverableBalance = person.totalRecoverableBalance + debt.originalBalance;
+            }
+        }
+
+        // Get total repaid across all allocations of all repayments
+        for (const i in person.repayments) {
+            const repayment = person.repayments[i];
+
+            for (const i in repayment.allocations) {
+                const allocation = repayment.allocations[i];
+
+                // find debt for this allocation and add the allocation to the repaid value
+                const debt = person.debts.find(debt => debt.id === allocation.debtId);
+                debt.repaid = debt.repaid + allocation.amount;
+
+                // add allocation to generate total repaid
+                person.totalRepaid = person.totalRepaid + allocation.amount;
+            }
+        }
+
+
         req.person = person
         next()
     } else {
@@ -67,8 +99,9 @@ router.param('personId', function (req, res, next, personId) {
 router.param('debtId', function (req, res, next, debtId) {
     
     const debt = req.person.debts.find( ({ id }) => id == debtId )
-    
+        
     if (debt) {
+        debt.repaid = 0; // 0 repaid value to prevent increments on refreshes
         const repayments = []
 
         for (const i in req.person.repayments) {
@@ -83,6 +116,9 @@ router.param('debtId', function (req, res, next, debtId) {
                         'datetime': repayment.datetime,
                         'method': repayment.method, 
                         'amount': allocation.amount});
+
+                    // add allocation to generate total repaid if not previously calculated
+                    debt.repaid = debt.repaid + allocation.amount;
                 }
             })
 
@@ -103,6 +139,7 @@ router.param('repaymentId', function (req, res, next, repaymentId) {
     const debts = []
 
     if (repayment) {
+        repayment.repaid = 0; // 0 repaid value to prevent increments on refreshes
 
         // get debt data only related to this repayment
         for (const i in repayment.allocations) {
@@ -113,10 +150,14 @@ router.param('repaymentId', function (req, res, next, repaymentId) {
                 if ( debt.id == allocation.debtId ) {
                     debts.push({
                         'id': debt.id,
+                        'accountId': debt.accountId,
                         'title': debt.title,
                         'amount': allocation.amount});
                 }
             })
+
+            
+            repayment.repaid = repayment.repaid + allocation.amount;
         }
 
         req.repayment = repayment
