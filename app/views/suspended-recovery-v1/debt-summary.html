@@ -185,7 +185,7 @@
         <div class="govuk-grid-row govuk-!-padding-3">
           <div class="activity-list govuk-clearfix">
 
-             {% for activity in Person.activities | sort(true, true, 'datetime') %}
+             {% for activity in Person.activities | sort(true, true, 'datetime') | getLast(2) %}
                 {{ activityItem(activity=activity) }}
             {%endfor%} 
         

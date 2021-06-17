@@ -62,6 +62,9 @@ filters.isEmptyObject = function(obj) {
     return JSON.stringify(obj) === "{}";
 }
 
+filters.getLast = function(arr, count) {
+  return arr.slice(Math.max(arr.length - count, 0))
+}
 
 
 

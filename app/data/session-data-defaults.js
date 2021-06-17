@@ -212,6 +212,13 @@ module.exports = {
           "datetime": "2021-04-30T01:52:00.000Z",
           "activityBy": "Automated process",
           "content": "Claimant has a Universal Credit overpayment of £208.89."
+        },
+        {
+          "id": 3,
+          "title": "Call from claimant",
+          "datetime": "2021-05-04T11:19:00.000Z",
+          "activityBy": "Automated process",
+          "content": "Claimant queried reason for Universal Credit Overpayment.  Discussed overpayment period and amount owed. Told to ring Universal Credit for further explanation."
         }
       ],
       "debts": [
