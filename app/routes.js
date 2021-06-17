@@ -7,10 +7,11 @@ const router = express.Router()
 router.use('/', (req, res, next) => {
     res.locals.currentURL = req.originalUrl; //current screen
     res.locals.prevURL = req.get('Referrer'); // previous screen
-    console.log('\nprevious page: ' + res.locals.prevURL + '\ncurrent page: ' + res.locals.currentURL );
-    // console.log('previous page:: ' + res.locals.prevURL + '\ncurrent page: ' + req.url + ' ' + res.locals.currentURL );
+    // console.log('\nprevious page: ' + res.locals.prevURL + '\ncurrent page: ' + res.locals.currentURL );
+    console.log('previous page:: ' + res.locals.prevURL + '\ncurrent page: ' + req.url + ' ' + res.locals.currentURL );
 
-    // console.log('\nsession data:\n' + JSON.stringify(req.session.data, null, 2)) + '\n\n';
+    //console.log('\nsession data:\n' + JSON.stringify(req.session.data, null, 2)) + '\n\n';
+        
     // if (!req.breadcrumbs) {
     //     req.breadcrumbs = [];
     // }
@@ -19,7 +20,12 @@ router.use('/', (req, res, next) => {
         req.session.data['breadcrumbs'] = {};
     } 
 
-    console.log('/ \n' + req.session.data['breadcrumbs']);
+    if (!req.session.data['backLinks']) {
+        req.session.data['backLinks'] = [];
+    } 
+
+    // console.log('\nBreadcrumbs:\n' + JSON.stringify(req.session.data.breadcrumbs, null, 2)) + '\n\n';
+    
 
     next();
 });
@@ -164,7 +170,7 @@ router.param('repaymentId', function (req, res, next, repaymentId) {
         req.debts = debts
         next()
     } else {
-        next(new Error('failed to load debt'))
+        next(new Error('failed to load repayment'))
     }
 })
 
@@ -232,6 +238,21 @@ router.get('/multiple-advances-v1/person/:personId/repayment-details/:repaymentI
 
 // =========== Dynamic Routes ===================
 
+// back button
+router.get('/back', function (req, res, next) {
+
+    req.session.data.backLinks.pop()
+
+    if (req.session.data.backLinks.length) {
+        
+        res.redirect(req.session.data.backLinks[req.session.data.backLinks.length - 1]);
+        
+    } else {
+        res.redirect(req.session.data.breadcrumbs.debtSummary.url);
+    }
+})
+
+
 // get person summary
 router.get('/scenario/:scenario/v/:versionId/person/:personId', function (req, res, next) {
 
@@ -240,12 +261,15 @@ router.get('/scenario/:scenario/v/:versionId/person/:personId', function (req, r
 
     // reset breadcrumbs as this is current start
     req.session.data.breadcrumbs = {};
+    req.session.data.backLinks = [];
 
     // add summary to breadcrumbs
     req.session.data.breadcrumbs.debtSummary = {
         text: 'Debt Summary', 
         url: res.locals.currentURL };
 
+        addToList(req.session.data.backLinks, res.locals.currentURL);
+    
     res.render( req.scenarioPath + 'debt-summary.html', {
         Person: req.person,
         Breadcrumbs: req.session.data.breadcrumbs,
@@ -272,6 +296,8 @@ router.get('/scenario/:scenario/v/:versionId/person/:personId/debt-details/:debt
         text: req.debt.title, 
         url: res.locals.currentURL };
 
+        addToList(req.session.data.backLinks, res.locals.currentURL);
+    
     res.render( req.scenarioPath + 'debt-details.html', {
         Person: req.person,
         Debt: req.debt,
@@ -296,6 +322,8 @@ router.get('/scenario/:scenario/v/:versionId/person/:personId/repayment-details/
         text: req.repayment.method + ' - ' + GetFormattedDate(req.repayment.datetime), 
         url: res.locals.currentURL };
 
+    addToList(req.session.data.backLinks, res.locals.currentURL);
+    
     res.render( req.scenarioPath + 'repayment-details.html', {
         Person: req.person,
         Repayment: req.repayment,
@@ -305,7 +333,89 @@ router.get('/scenario/:scenario/v/:versionId/person/:personId/repayment-details/
     });
 })
 
-function GetFormattedDate(datetime) {
+// step 1 for card payment - order number
+router.get('/scenario/:scenario/v/:versionId/person/:personId/debt-details/:debtId/card-payment-order-number', function (req, res, next) {
+ 
+
+    // set path for the senario's templates
+    req.scenarioPath = req.scenario + '-v' + req.versionId + '/'
+
+    addToList(req.session.data.backLinks, res.locals.currentURL);
+
+    // Card process details
+    if (!('cardPayments' in req.debt)) {
+        req.debt.cardPayments = []
+        console.log('create cardPayments');
+    }
+    
+    if ( !req.debt.cardPayments.length || req.debt.cardPayments[req.debt.cardPayments.length - 1].status !== null){
+        console.log('create new card payment');
+
+        const cardPayment = {
+            'orderCode':    'DM11-' + 
+                            req.person.nino.replace(/\s/g, '') + '-' + 
+                            req.debt.accountId + '-' + 
+                            GetFormattedDate(new Date(), '') + '-' + 
+                            req.person.lastname.toUpperCase() + '-' + 
+                            (req.debt.cardPayments.length + 1),
+            'status': null
+        };
+
+        req.debt.cardPayments.push(cardPayment);
+    } else {
+        console.log('dont do anything')
+    }
+
+    console.log(req.debt)
+    
+    res.render( req.scenarioPath + 'card-payment-step-1.html', {
+        Person: req.person,
+        Debt: req.debt,
+        Breadcrumbs: req.session.data.breadcrumbs,
+        ScenarioPath: req.scenarioPath
+
+    });
+})
+
+// step 2 for card payment - payment successful question
+router.get('/scenario/:scenario/v/:versionId/person/:personId/debt-details/:debtId/card-payment-outcome', function (req, res, next) {
+ 
+
+    // set path for the senario's templates
+    req.scenarioPath = req.scenario + '-v' + req.versionId + '/'
+
+    addToList(req.session.data.backLinks, res.locals.currentURL);
+
+   
+    res.render( req.scenarioPath + 'card-payment-step-2.html', {
+        Person: req.person,
+        Debt: req.debt,
+        Breadcrumbs: req.session.data.breadcrumbs,
+        ScenarioPath: req.scenarioPath
+    });
+})
+
+// step 3 for card payment - payment amount question
+router.get('/scenario/:scenario/v/:versionId/person/:personId/debt-details/:debtId/card-payment-amount', function (req, res, next) {
+ 
+
+    // set path for the senario's templates
+    req.scenarioPath = req.scenario + '-v' + req.versionId + '/'
+
+    addToList(req.session.data.backLinks, res.locals.currentURL);
+
+   
+    res.render( req.scenarioPath + 'card-payment-step-2.html', {
+        Person: req.person,
+        Debt: req.debt,
+        Breadcrumbs: req.session.data.breadcrumbs,
+        ScenarioPath: req.scenarioPath
+    });
+})
+
+// Generic functions - not sure where to put this... will find a better place
+
+function GetFormattedDate(datetime, separator = "/") {
     const date = new Date(datetime);
 
     var month = date.getMonth() + 1;
@@ -315,7 +425,17 @@ function GetFormattedDate(datetime) {
     month = month < 10 ? '0' + month : month;
     day = day < 10 ? '0' + day : day;
 
-    return day + "/" + month + "/" + year;
+    return day + separator + month + separator + year;
+}
+
+// add to array only if last value is not equal to new value
+function addToList(arr, item){
+
+    const lastItem = arr[arr.length - 1];
+
+    if (lastItem != item){
+        arr.push(item)
+    }
 }
 
 module.exports = router

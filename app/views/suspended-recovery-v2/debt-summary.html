@@ -6,7 +6,6 @@
 {# Import macros #}
 {% from ScenarioPath + 'macros/key-details.njk' import keyDetails as keyDetails %}
 {% from ScenarioPath + 'macros/activity.njk' import activity as activityItem %}
-{% from ScenarioPath + 'macros/breadcrumbs.njk' import breadcrumbs as breadcrumbs %}
 {% from ScenarioPath + 'macros/repayment-row.njk' import repayment as repaymentRow %}
 {% from ScenarioPath + 'macros/debt-row.njk' import debt as debtRow %}
 
@@ -16,7 +15,6 @@
 {% endblock %}
 
 {% block content %}
-{{ breadcrumbs(links=Breadcrumbs) }}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
@@ -93,6 +91,10 @@
         </h2>
 
         <hr class="govuk-!-margin-bottom-2">
+
+        {{ govukButton({
+          text: "Add diary entry"
+        }) }}
 
         <ol class="dwp-timeline">
           {% for activity in Person.activities | sort(true, true, 'datetime') %}

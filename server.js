@@ -221,6 +221,7 @@ if (useLogging !== 'false') {
         url: req.originalUrl,
         data: req.session.data
       }
+      // log session data in console
       console.log(JSON.stringify(log, null, 2))
     }
     next()

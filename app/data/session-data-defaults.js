@@ -192,7 +192,8 @@ module.exports = {
     },
     {
       "id": 2,
-      "name": "Gemma McDonald",
+      "firstname": "Gemma",
+      "lastname": "McDonald",
       "nino": "QQ 41 34 68 Z",
       "onBenefit": true,
       "benefits": [

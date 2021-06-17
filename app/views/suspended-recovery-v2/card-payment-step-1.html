@@ -1,0 +1,74 @@
+{# Template overrides #}
+{% extends "layout.html" %}
+{% block footer %}{% endblock %}
+
+{# Import macros #}
+{% from ScenarioPath + 'macros/key-details.njk' import keyDetails as keyDetails %}
+{% from ScenarioPath + 'macros/back.njk' import back as back %}
+
+{% from ScenarioPath + 'macros/status.njk' import status as status %}
+{% from ScenarioPath + 'macros/repayment-row.njk' import repayment as repaymentRow %}
+
+{% set cardPayment = Debt.cardPayments | last %}
+
+
+{% block header %}
+  {{ keyDetails(Person) }}
+  {{ back() }}
+{% endblock %}
+
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      <section class="section">
+        <span class="govuk-caption-l">Take card payment</span>
+        <h1 class="govuk-heading-l">
+          Enter order information
+        </h1>
+
+        <p>Launch PCIpal and follow the steps in the <a href="https://intranet.dwp.gov.uk/manual/debt-centre-guidance/pcipal-debitcredit-card-payment-user-guide" class="govuk-link" rel="noreferrer noopener" target="_blank">PCIpal user guide (opens in new tab)</a>.</p>
+        
+        <dl class="govuk-summary-list govuk-!-margin-top-8 govuk-!-margin-bottom-8">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key dm-ordercode-dt-width">
+              Order code
+            </dt>
+            <dd  class="govuk-summary-list__value">
+              {{ cardPayment.orderCode }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              {# <input class="" id="order-code" type="text" readonly value="{{ cardPayment.orderCode }}"> #}
+              <a id="copy" class="govuk-link" href="#">
+                Copy<span class="govuk-visually-hidden"> order code</span>
+              </a>
+            </dd>
+          </div>
+        </dl>
+
+        <script>
+          function copy() {
+            var copyText = document.querySelector("#order-code");
+            copyText.select();
+            document.execCommand("copy");
+          }
+
+          document.querySelector("#copy").addEventListener("click", copy);
+        </script>
+
+        <p>Select 'Finished' when you are ready to create a diary entry.</p>
+       
+       {{ govukButton({
+          text: "Finished",
+          href: Breadcrumbs.debtDetails.url + "/card-payment-outcome"
+        }) }}
+      </section>
+
+
+    </div>
+    
+  </div>
+
+{% endblock %}

@@ -5,12 +5,12 @@
 
 {# Import macros #}
 {% from ScenarioPath + 'macros/key-details.njk' import keyDetails as keyDetails %}
-{% from ScenarioPath + 'macros/breadcrumbs.njk' import breadcrumbs as breadcrumbs %}
+{% from ScenarioPath + 'macros/back.njk' import back as back %}
 {% from ScenarioPath + 'macros/repayment-debt-row.njk' import debt as repaymentDebtRow %}
 
 {% block header %}
   {{ keyDetails(Person) }}
-  {{ breadcrumbs(links=Breadcrumbs) }}
+  {{ back() }}
 {% endblock %}
 
 {% block content %}
@@ -18,9 +18,9 @@
     <div class="govuk-grid-column-full">
  
       <section class="section">
-        <h2 class="govuk-heading-m">
+        <h1 class="govuk-heading-l">
           {{ Repayment.method }}
-        </h2>
+        </h1>
         <dl class="govuk-clearfix govuk-section-break--l  ">
           <div class="key-values govuk-grid-column-one-third">
             <dt class="govuk-caption-m govuk-!-margin-bottom-0">Repayment amount</dt>
