@@ -23,58 +23,65 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
 
-      <section class="section">
-        <span class="govuk-caption-l">Take card payment</span>
-        <div class="govuk-form-group">
+      <section class="section js-validation-group">
+        <div class="govuk-error-summary js-validation-message js-validation--hidden" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+            <h2 class="govuk-error-summary__title" id="error-summary-title">
+              There is a problem
+            </h2>
+            <div class="govuk-error-summary__body">
+              <ul class="govuk-list govuk-error-summary__list">
+                <li>
+                  <a href="#payment-success">Select if the card payment was successful</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        
+        <div class="govuk-form-group js-validate" data-js-valid="false" >
           <fieldset class="govuk-fieldset">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+              <span class="govuk-caption-l">Take card payment</span>
               <h1 class="govuk-fieldset__heading">
                 Was the payment successful?
               </h1>
             </legend>
-            <div class="govuk-radios">
+
+            <span id="full-name-input-error" class="govuk-error-message js-validation--hidden">
+              <span class="govuk-visually-hidden">Error:</span> Select yes if the card payment was successful, or no if it failed.
+            </span>
+
+            <div class="govuk-radios" >
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="was-payment-successful" name="was-payment-successful" type="radio" value="england">
-                <label class="govuk-label govuk-radios__label" for="was-payment-successful">
+                <input class="govuk-radios__input js-radioRequired" id="payment-success" name="payment-success" type="radio" value="england">
+                <label class="govuk-label govuk-radios__label" for="payment-success">
                   Yes
                 </label>
               </div>
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="was-payment-successful-2" name="was-payment-successful" type="radio" value="scotland">
-                <label class="govuk-label govuk-radios__label" for="was-payment-successful-2">
+                <input class="govuk-radios__input js-radioRequired" id="payment-success-2" name="payment-success" type="radio" value="scotland">
+                <label class="govuk-label govuk-radios__label" for="payment-success-2">
                   No
                 </label>
               </div>
             </div>
 
+            {# <div class="govuk-input__wrapper js-validate" data-js-valid="false">
+              <div class="govuk-input__prefix" aria-hidden="true">£</div>
+              <input class="govuk-input govuk-input--width-5 js-textRequired js-currencyValidation" id="amount-repaid" name="amount-repaid" type="text" spellcheck="false">
+            </div> #}
+
           </fieldset>
         </div>
 
-       {{ govukButton({
+        {{ govukButton({
           text: "Next",
-          href: "",
-          disabled: true,
-          name: "next-button"
+          href: Breadcrumbs.debtDetails.url + "/card-payment-amount",
+          name: "next-button",
+          classes: "js-submit-validation"
         }) }}
       </section>
 
-      <script>
-  
-        const nextButton = document.getElementsByName('next-button'),
-              radios = document.getElementsByName('was-payment-successful');
 
-        for( var i = 0; i < radios.length; i++){
-          radios[i].addEventListener('click', function(e){
-            console.log('clicked');
-          },false);
-        }
-
-      
-
-       console.dir(radios);
-        
-        
-      </script>
 
 
     </div>

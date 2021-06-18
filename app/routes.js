@@ -358,7 +358,8 @@ router.get('/scenario/:scenario/v/:versionId/person/:personId/debt-details/:debt
                             GetFormattedDate(new Date(), '') + '-' + 
                             req.person.lastname.toUpperCase() + '-' + 
                             (req.debt.cardPayments.length + 1),
-            'status': null
+            'status': null,
+            'paid': null
         };
 
         req.debt.cardPayments.push(cardPayment);
@@ -405,7 +406,7 @@ router.get('/scenario/:scenario/v/:versionId/person/:personId/debt-details/:debt
     addToList(req.session.data.backLinks, res.locals.currentURL);
 
    
-    res.render( req.scenarioPath + 'card-payment-step-2.html', {
+    res.render( req.scenarioPath + 'card-payment-step-3.html', {
         Person: req.person,
         Debt: req.debt,
         Breadcrumbs: req.session.data.breadcrumbs,

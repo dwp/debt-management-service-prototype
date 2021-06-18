@@ -1,0 +1,7 @@
+.js-validation--hidden {
+    display: none;
+}
+
+.govuk-form-group--error .js-validation--hidden {
+    display: block;
+}
