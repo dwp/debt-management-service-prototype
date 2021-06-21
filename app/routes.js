@@ -174,6 +174,19 @@ router.param('repaymentId', function (req, res, next, repaymentId) {
     }
 })
 
+// get the person details from the session data and attach it to the request object
+router.param('orderCode', function (req, res, next, orderCode) {
+    
+    const cardPayment = req.debt.cardPayments.find( ({ orderCode }) => orderCode == orderCode );
+
+    if (cardPayment) {
+        req.CardPayment = cardPayment
+        next()
+    } else {
+        next(new Error('failed to load card payment'))
+    }
+})
+
 // =========== Multiple Advances v1 Routes ===================
 
 // get person summary
@@ -271,9 +284,9 @@ router.get('/scenario/:scenario/v/:versionId/person/:personId', function (req, r
         addToList(req.session.data.backLinks, res.locals.currentURL);
     
     res.render( req.scenarioPath + 'debt-summary.html', {
-        Person: req.person,
+        ScenarioPath: req.scenarioPath,
         Breadcrumbs: req.session.data.breadcrumbs,
-        ScenarioPath: req.scenarioPath
+        Person: req.person
     });
 })
 
@@ -298,12 +311,12 @@ router.get('/scenario/:scenario/v/:versionId/person/:personId/debt-details/:debt
 
         addToList(req.session.data.backLinks, res.locals.currentURL);
     
-    res.render( req.scenarioPath + 'debt-details.html', {
+    res.render( req.scenarioPath + 'debt-details.html', {       
+        ScenarioPath: req.scenarioPath,
+        Breadcrumbs: req.session.data.breadcrumbs,
         Person: req.person,
         Debt: req.debt,
-        Repayments: req.repayments,
-        Breadcrumbs: req.session.data.breadcrumbs,
-        ScenarioPath: req.scenarioPath
+        Repayments: req.repayments
     });
 })
 
@@ -325,16 +338,16 @@ router.get('/scenario/:scenario/v/:versionId/person/:personId/repayment-details/
     addToList(req.session.data.backLinks, res.locals.currentURL);
     
     res.render( req.scenarioPath + 'repayment-details.html', {
+        ScenarioPath: req.scenarioPath,
+        Breadcrumbs: req.session.data.breadcrumbs,
         Person: req.person,
         Repayment: req.repayment,
-        Debts: req.debts,
-        Breadcrumbs: req.session.data.breadcrumbs,
-        ScenarioPath: req.scenarioPath
+        Debts: req.debts
     });
 })
 
 // step 1 for card payment - order number
-router.get('/scenario/:scenario/v/:versionId/person/:personId/debt-details/:debtId/card-payment-order-number', function (req, res, next) {
+router.get('/scenario/:scenario/v/:versionId/person/:personId/debt-details/:debtId/card-payment-order-code', function (req, res, next) {
  
 
     // set path for the senario's templates
@@ -342,44 +355,59 @@ router.get('/scenario/:scenario/v/:versionId/person/:personId/debt-details/:debt
 
     addToList(req.session.data.backLinks, res.locals.currentURL);
 
+    let cardPayment;
+
+    console.log('======== initialise card payment');
+    console.log(cardPayment);
+
     // Card process details
     if (!('cardPayments' in req.debt)) {
         req.debt.cardPayments = []
-        console.log('create cardPayments');
-    }
+    } 
     
-    if ( !req.debt.cardPayments.length || req.debt.cardPayments[req.debt.cardPayments.length - 1].status !== null){
-        console.log('create new card payment');
+    if ( !req.debt.cardPayments.length || req.debt.cardPayments[req.debt.cardPayments.length - 1].paymentCompleted ){
 
-        const cardPayment = {
+        cardPayment = {
             'orderCode':    'DM11-' + 
                             req.person.nino.replace(/\s/g, '') + '-' + 
                             req.debt.accountId + '-' + 
                             GetFormattedDate(new Date(), '') + '-' + 
                             req.person.lastname.toUpperCase() + '-' + 
                             (req.debt.cardPayments.length + 1),
-            'status': null,
-            'paid': null
+            'paymentSuccessful': null,
+            'amount': null,
+            'paymentCompleted': false
         };
 
+        console.log('======== after assigned card payment');
+        console.log(cardPayment);
+
+        
         req.debt.cardPayments.push(cardPayment);
     } else {
-        console.log('dont do anything')
-    }
+        // get the last card payment created
+        console.log('get the last card payment created');
+        cardPayment = req.debt.cardPayments[req.debt.cardPayments.length - 1];
+    } 
 
-    console.log(req.debt)
+    req.cardPayment = cardPayment;
+
+    console.log('======== last bit card payment');
+        console.log(cardPayment);
+    console.log(req.cardPayment);
     
     res.render( req.scenarioPath + 'card-payment-step-1.html', {
+        ScenarioPath: req.scenarioPath,
+        Breadcrumbs: req.session.data.breadcrumbs,
         Person: req.person,
         Debt: req.debt,
-        Breadcrumbs: req.session.data.breadcrumbs,
-        ScenarioPath: req.scenarioPath
+        CardPayment: req.cardPayment
 
     });
 })
 
 // step 2 for card payment - payment successful question
-router.get('/scenario/:scenario/v/:versionId/person/:personId/debt-details/:debtId/card-payment-outcome', function (req, res, next) {
+router.get('/scenario/:scenario/v/:versionId/person/:personId/debt-details/:debtId/card-payment-outcome/:orderCode', function (req, res, next) {
  
 
     // set path for the senario's templates
@@ -387,17 +415,17 @@ router.get('/scenario/:scenario/v/:versionId/person/:personId/debt-details/:debt
 
     addToList(req.session.data.backLinks, res.locals.currentURL);
 
-   
     res.render( req.scenarioPath + 'card-payment-step-2.html', {
+        ScenarioPath: req.scenarioPath,
+        Breadcrumbs: req.session.data.breadcrumbs,
         Person: req.person,
         Debt: req.debt,
-        Breadcrumbs: req.session.data.breadcrumbs,
-        ScenarioPath: req.scenarioPath
+        CardPayment: req.CardPayment
     });
 })
 
 // step 3 for card payment - payment amount question
-router.get('/scenario/:scenario/v/:versionId/person/:personId/debt-details/:debtId/card-payment-amount', function (req, res, next) {
+router.get('/scenario/:scenario/v/:versionId/person/:personId/debt-details/:debtId/card-payment-amount/:orderCode', function (req, res, next) {
  
 
     // set path for the senario's templates
@@ -405,12 +433,21 @@ router.get('/scenario/:scenario/v/:versionId/person/:personId/debt-details/:debt
 
     addToList(req.session.data.backLinks, res.locals.currentURL);
 
+
+    // update data in json from step 2 whilst still in request, and remove the default value
+    console.log('============== POST ============') ;
+    console.log(req.session.data.cardPaymentForm);
+    req.CardPayment.paymentSuccessful = ( req.session.data.cardPaymentForm.paymentSuccessful === 'true'? true : false );
+
+    console.log(req.CardPayment);
+    console.log('============== END POST ============') ;
    
     res.render( req.scenarioPath + 'card-payment-step-3.html', {
+        ScenarioPath: req.scenarioPath,
+        Breadcrumbs: req.session.data.breadcrumbs,
         Person: req.person,
         Debt: req.debt,
-        Breadcrumbs: req.session.data.breadcrumbs,
-        ScenarioPath: req.scenarioPath
+        CardPayment: req.cardPayment
     });
 })
 

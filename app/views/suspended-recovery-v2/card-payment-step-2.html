@@ -5,11 +5,10 @@
 {# Import macros #}
 {% from ScenarioPath + 'macros/key-details.njk' import keyDetails as keyDetails %}
 {% from ScenarioPath + 'macros/back.njk' import back as back %}
-
 {% from ScenarioPath + 'macros/status.njk' import status as status %}
 {% from ScenarioPath + 'macros/repayment-row.njk' import repayment as repaymentRow %}
+{% from ScenarioPath + 'macros/checked-if-value.njk' import checkedIfValue as checkedIfValue %}
 
-{% set cardPayment = Debt.cardPayments | last %}
 
 
 {% block header %}
@@ -31,54 +30,51 @@
             <div class="govuk-error-summary__body">
               <ul class="govuk-list govuk-error-summary__list">
                 <li>
-                  <a href="#payment-success">Select if the card payment was successful</a>
+                  <a href="#payment-successful">Select if the card payment was successful</a>
                 </li>
               </ul>
             </div>
           </div>
         
-        <div class="govuk-form-group js-validate" data-js-valid="false" >
-          <fieldset class="govuk-fieldset">
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-              <span class="govuk-caption-l">Take card payment</span>
-              <h1 class="govuk-fieldset__heading">
-                Was the payment successful?
-              </h1>
-            </legend>
+        <form class="form" action="{{ Breadcrumbs.debtDetails.url + '/card-payment-amount/' + CardPayment.orderCode }}" method="post">
+          <div class="govuk-form-group js-validate" data-js-valid="false" >
+            <fieldset class="govuk-fieldset">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                <span class="govuk-caption-l">Take card payment</span>
+                <h1 class="govuk-fieldset__heading">
+                  Was the payment successful?
+                </h1>
+              </legend>
 
-            <span id="full-name-input-error" class="govuk-error-message js-validation--hidden">
-              <span class="govuk-visually-hidden">Error:</span> Select yes if the card payment was successful, or no if it failed.
-            </span>
+              <span id="full-name-input-error" class="govuk-error-message js-validation--hidden">
+                <span class="govuk-visually-hidden">Error:</span> Select yes if the card payment was successful, or no if it failed.
+              </span>
 
-            <div class="govuk-radios" >
-              <div class="govuk-radios__item">
-                <input class="govuk-radios__input js-radioRequired" id="payment-success" name="payment-success" type="radio" value="england">
-                <label class="govuk-label govuk-radios__label" for="payment-success">
-                  Yes
-                </label>
+              {{ CardPayment | dump }}
+
+              <div class="govuk-radios" >
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input js-radioRequired" id="payment-successful" name="cardPaymentForm[paymentSuccessful]" type="radio" value="true" {{ checkedIfValue(CardPayment.paymentSuccessful, true) }}>
+                  <label class="govuk-label govuk-radios__label" for="payment-successful">
+                    Yes
+                  </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input js-radioRequired" id="payment-successful-2" name="cardPaymentForm[paymentSuccessful]" type="radio" value="false" {{ checkedIfValue(CardPayment.paymentSuccessful, false) }}>
+                  <label class="govuk-label govuk-radios__label" for="payment-successful-2">
+                    No
+                  </label>
+                </div>
               </div>
-              <div class="govuk-radios__item">
-                <input class="govuk-radios__input js-radioRequired" id="payment-success-2" name="payment-success" type="radio" value="scotland">
-                <label class="govuk-label govuk-radios__label" for="payment-success-2">
-                  No
-                </label>
-              </div>
-            </div>
 
-            {# <div class="govuk-input__wrapper js-validate" data-js-valid="false">
-              <div class="govuk-input__prefix" aria-hidden="true">£</div>
-              <input class="govuk-input govuk-input--width-5 js-textRequired js-currencyValidation" id="amount-repaid" name="amount-repaid" type="text" spellcheck="false">
-            </div> #}
+            </fieldset>
+          </div>
 
-          </fieldset>
-        </div>
-
-        {{ govukButton({
-          text: "Next",
-          href: Breadcrumbs.debtDetails.url + "/card-payment-amount",
-          name: "next-button",
-          classes: "js-submit-validation"
-        }) }}
+          {{ govukButton({
+            text: "Next",
+            classes: "js-submit-validation"
+          }) }}
+        </form>
       </section>
 
 
@@ -87,5 +83,7 @@
     </div>
     
   </div>
+
+  <a href="/prototype-admin/clear-data">Clear data</a>
 
 {% endblock %}

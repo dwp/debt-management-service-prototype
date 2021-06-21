@@ -16,8 +16,7 @@ const validation = function(){
   // only run if the page requires validation
   if ( $('.js-validation-group').length ) {
 
-    const $validationGroup = $('.js-validation-group'),
-          $validationFields = $('.js-validate'),
+    const $validationFields = $('.js-validate'),
           $validationSubmit = $('.js-submit-validation');
     
     let $invalidFields = $validationFields;
@@ -67,6 +66,18 @@ const validation = function(){
     
     
     // // on required radio button change make parent container valid to test on submit 
+
+    // when the page loads make sure if there are radios already checked that the fieldset is considered valid as change may not be required.
+    $('.js-radioRequired').each( function() {
+      const $radioGroupParent = $(this).closest('.js-validate');
+
+      if ($(this).prop('checked')) {
+        $radioGroupParent.attr('data-js-valid', true);
+        updateInvalidFields($radioGroupParent);
+        return false;
+      }
+    });
+
     $('.js-radioRequired').change( function() {
       const $radioGroup = $('input[name="' + $(this).attr('name') + '"]');
       const $radioGroupParent = $(this).closest('.js-validate');
