@@ -1,7 +1,6 @@
-.js-validation--hidden {
+.js-error-summary.js-validation--hidden,
+.js-error-summary li.js-validation--hidden,
+.js-error-message.js-validation--hidden {
     display: none;
 }
 
-.govuk-form-group--error .js-validation--hidden {
-    display: block;
-}

@@ -357,14 +357,12 @@ router.get('/scenario/:scenario/v/:versionId/person/:personId/debt-details/:debt
 
     let cardPayment;
 
-    console.log('======== initialise card payment');
-    console.log(cardPayment);
-
-    // Card process details
+    // Create cardPayments array if it doesn't exist
     if (!('cardPayments' in req.debt)) {
         req.debt.cardPayments = []
     } 
     
+    // Create new cardPayments object with new order code in array if none exist or if the last payment in the array has been completed
     if ( !req.debt.cardPayments.length || req.debt.cardPayments[req.debt.cardPayments.length - 1].paymentCompleted ){
 
         cardPayment = {
@@ -375,26 +373,17 @@ router.get('/scenario/:scenario/v/:versionId/person/:personId/debt-details/:debt
                             req.person.lastname.toUpperCase() + '-' + 
                             (req.debt.cardPayments.length + 1),
             'paymentSuccessful': null,
-            'amount': null,
+            'paymentAmount': null,
             'paymentCompleted': false
         };
-
-        console.log('======== after assigned card payment');
-        console.log(cardPayment);
-
         
         req.debt.cardPayments.push(cardPayment);
     } else {
-        // get the last card payment created
-        console.log('get the last card payment created');
+        // else get the last card payment created - this will continue until the last item in the array has paymentCompleted value of true
         cardPayment = req.debt.cardPayments[req.debt.cardPayments.length - 1];
     } 
 
     req.cardPayment = cardPayment;
-
-    console.log('======== last bit card payment');
-        console.log(cardPayment);
-    console.log(req.cardPayment);
     
     res.render( req.scenarioPath + 'card-payment-step-1.html', {
         ScenarioPath: req.scenarioPath,
@@ -447,7 +436,34 @@ router.get('/scenario/:scenario/v/:versionId/person/:personId/debt-details/:debt
         Breadcrumbs: req.session.data.breadcrumbs,
         Person: req.person,
         Debt: req.debt,
-        CardPayment: req.cardPayment
+        CardPayment: req.CardPayment
+    });
+})
+
+// step 4 for card payment - payment check answers
+router.get('/scenario/:scenario/v/:versionId/person/:personId/debt-details/:debtId/card-payment-check-answers/:orderCode', function (req, res, next) {
+ 
+
+    // set path for the senario's templates
+    req.scenarioPath = req.scenario + '-v' + req.versionId + '/'
+
+    addToList(req.session.data.backLinks, res.locals.currentURL);
+
+
+    // update data in json from step 2 whilst still in request, and remove the default value
+    console.log('============== POST ============') ;
+    console.log(req.session.data.cardPaymentForm);
+    req.CardPayment.paymentAmount = parseFloat(req.session.data.cardPaymentForm.paymentAmount);
+
+    console.log(req.CardPayment);
+    console.log('============== END POST ============') ;
+   
+    res.render( req.scenarioPath + 'card-payment-step-4.html', {
+        ScenarioPath: req.scenarioPath,
+        Breadcrumbs: req.session.data.breadcrumbs,
+        Person: req.person,
+        Debt: req.debt,
+        CardPayment: req.CardPayment
     });
 })
 

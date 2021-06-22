@@ -9,8 +9,6 @@
 {% from ScenarioPath + 'macros/repayment-row.njk' import repayment as repaymentRow %}
 {% from ScenarioPath + 'macros/checked-if-value.njk' import checkedIfValue as checkedIfValue %}
 
-
-
 {% block header %}
   {{ keyDetails(Person) }}
   {{ back() }}
@@ -23,13 +21,13 @@
     <div class="govuk-grid-column-full">
 
       <section class="section js-validation-group">
-        <div class="govuk-error-summary js-validation-message js-validation--hidden" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+        <div class="govuk-error-summary js-error-summary js-validation--hidden" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
             <h2 class="govuk-error-summary__title" id="error-summary-title">
               There is a problem
             </h2>
             <div class="govuk-error-summary__body">
               <ul class="govuk-list govuk-error-summary__list">
-                <li>
+                <li id="payment-successful-summary-error" class="js-radio-required-error js-validation--hidden">
                   <a href="#payment-successful">Select if the card payment was successful</a>
                 </li>
               </ul>
@@ -37,7 +35,7 @@
           </div>
         
         <form class="form" action="{{ Breadcrumbs.debtDetails.url + '/card-payment-amount/' + CardPayment.orderCode }}" method="post">
-          <div class="govuk-form-group js-validate" data-js-valid="false" >
+          <div class="govuk-form-group js-validate js-radio-required" data-js-valid="false" >
             <fieldset class="govuk-fieldset">
               <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                 <span class="govuk-caption-l">Take card payment</span>
@@ -46,21 +44,19 @@
                 </h1>
               </legend>
 
-              <span id="full-name-input-error" class="govuk-error-message js-validation--hidden">
-                <span class="govuk-visually-hidden">Error:</span> Select yes if the card payment was successful, or no if it failed.
+              <span id="payment-successful-input-error" class="govuk-error-message js-error-message js-validation--hidden">
+                <span class="govuk-visually-hidden">Error:</span> Select yes if the card payment was successful, or no if it failed
               </span>
-
-              {{ CardPayment | dump }}
 
               <div class="govuk-radios" >
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input js-radioRequired" id="payment-successful" name="cardPaymentForm[paymentSuccessful]" type="radio" value="true" {{ checkedIfValue(CardPayment.paymentSuccessful, true) }}>
+                  <input class="govuk-radios__input" id="payment-successful" name="cardPaymentForm[paymentSuccessful]" type="radio" value="true" {{ checkedIfValue(CardPayment.paymentSuccessful, true) }}>
                   <label class="govuk-label govuk-radios__label" for="payment-successful">
                     Yes
                   </label>
                 </div>
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input js-radioRequired" id="payment-successful-2" name="cardPaymentForm[paymentSuccessful]" type="radio" value="false" {{ checkedIfValue(CardPayment.paymentSuccessful, false) }}>
+                  <input class="govuk-radios__input" id="payment-successful-2" name="cardPaymentForm[paymentSuccessful]" type="radio" value="false" {{ checkedIfValue(CardPayment.paymentSuccessful, false) }}>
                   <label class="govuk-label govuk-radios__label" for="payment-successful-2">
                     No
                   </label>
