@@ -7,6 +7,7 @@
 {% from ScenarioPath + 'macros/key-details.njk' import keyDetails as keyDetails %}
 {% from ScenarioPath + 'macros/back.njk' import back as back %}
 {% from ScenarioPath + 'macros/repayment-debt-row.njk' import debt as repaymentDebtRow %}
+{% from ScenarioPath + 'macros/status.njk' import status as status %}
 
 {% block header %}
   {{ keyDetails(Person) }}
@@ -21,6 +22,9 @@
         <h1 class="govuk-heading-l">
           {{ Repayment.method }} 
         </h1>
+        
+        {{ status( Repayment.status ) }}
+
         <dl class="govuk-clearfix govuk-section-break--l  ">
           <div class="key-values govuk-grid-column-one-third">
             <dt class="govuk-caption-m govuk-!-margin-bottom-0">Repayment amount</dt>
