@@ -19,7 +19,7 @@
  
       <section class="section">
         <h1 class="govuk-heading-l">
-          {{ Repayment.method }}
+          {{ Repayment.method }} 
         </h1>
         <dl class="govuk-clearfix govuk-section-break--l  ">
           <div class="key-values govuk-grid-column-one-third">
@@ -29,23 +29,32 @@
         </dl>
 
         <div class="govuk-clearfix govuk-!-margin-top-5">
-          <div class="govuk-grid-column-one-half govuk-!-padding-left-0">    
-            
-            {{ govukSummaryList({
-                classes: 'govuk-summary-list--no-border govuk-!-margin-bottom-0',
-                rows: [              
-                  {
-                    key: {
-                      text: "Repayment received",
-                      class: "govuk-table__header"
-                    },
-                    value: {
-                      text: Repayment.datetime | date,
-                      format: "numeric"
-                    }
-                  }
-                ]
-              }) }}  
+          <div class="govuk-grid-column-full-width govuk-!-padding-left-0">    
+          
+            <dl class="govuk-summary-list govuk-summary-list--no-border govuk-!-margin-bottom-0 key-width-200">
+              
+              {% if Repayment.orderCode %} 
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">
+                    Order code
+                  </dt>
+                  <dd class="govuk-summary-list__value">
+                    {{ Repayment.orderCode }} 
+                  </dd>
+                </div>
+              {% endif %}
+              
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">
+                  Repayment received
+                </dt>
+                <dd class="govuk-summary-list__value">
+                  {{ Repayment.datetime | date }}
+                </dd>
+              </div>
+
+              
+            </dl>
           </div>
         </div>
       </section>

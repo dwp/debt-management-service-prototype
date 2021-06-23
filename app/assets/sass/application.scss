@@ -37,7 +37,6 @@ $govuk-assets-path: '/govuk/assets/';
 @import "base/links";
 
 // custom components
-@import "components/js-validation";
 @import "components/card";
 @import "components/sum";
 @import "components/table";
@@ -47,4 +46,5 @@ $govuk-assets-path: '/govuk/assets/';
 @import "components/banner";
 @import "components/timeline";
 
-
+// javascript related styling
+@import "js-specific/js-validation";

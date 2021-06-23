@@ -3,3 +3,12 @@
 .govuk-summary-list__value:last-child {
     width: 50%;
 }
+
+.key-width-200 .govuk-summary-list__key {
+    width: 200px;
+}
+
+.key-width-200 .govuk-summary-list__value,
+.key-width-200 .govuk-summary-list__value:last-child {
+    width: auto;
+}

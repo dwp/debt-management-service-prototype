@@ -87,7 +87,8 @@ const validation = function(){
           // removing commas before validation and submit
           const value = $field.val().replaceAll(',', '');
     
-          console.log('cleaned: ' + value);
+          // console.log('cleaned: ' + value);
+          console.log('max: ' + parseFloat( $field.attr('data-validation-max') ));
     
           if ( !value ) {
             hideErrors();
@@ -106,6 +107,15 @@ const validation = function(){
             $inputGroup.addClass('govuk-form-group--error');
             $('#payment-amount-min-error', $inputGroup).removeClass('js-validation--hidden');
             $('#payment-amount-summary-error2').removeClass('js-validation--hidden');
+            
+          }
+          else if ( value > parseFloat( $field.attr('data-validation-max') ) ) {
+            hideErrors();
+            console.log('invalid: more than owed')
+            $inputGroup.attr('data-js-valid', false);
+            $inputGroup.addClass('govuk-form-group--error');
+            $('#payment-amount-max-error', $inputGroup).removeClass('js-validation--hidden');
+            $('#payment-amount-summary-error4').removeClass('js-validation--hidden');
             
           }
           else if ( !/^\d+(,\d{3})*(\.\d{1,2})?$/.test(value) ) {
@@ -177,7 +187,6 @@ const validation = function(){
         e.preventDefault();
       } 
     } );
-
 
   }
 

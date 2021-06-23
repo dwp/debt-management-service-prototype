@@ -83,6 +83,7 @@ module.exports = {
           "id": 1,
           "datetime": "12/02/2021",
           "method": "Universal Credit Deduction",
+          "status": "received",
           "allocations": [
             {
               "debtId": 1,
@@ -102,6 +103,7 @@ module.exports = {
           "id": 2,
           "datetime": "12/01/2021",
           "method": "Universal Credit Deduction",
+          "status": "received",
           "allocations": [
             {
               "debtId": 1,
@@ -117,6 +119,7 @@ module.exports = {
           "id": 3,
           "datetime": "12/12/2020",
           "method": "Universal Credit Deduction",
+          "status": "received",
           "allocations": [
             {
               "debtId": 1,
@@ -132,6 +135,7 @@ module.exports = {
           "id": 4,
           "datetime": "12/11/2020",
           "method": "Universal Credit Deduction",
+          "status": "received",
           "allocations": [
             {
               "debtId": 1,
@@ -147,6 +151,7 @@ module.exports = {
           "id": 5,
           "datetime": "12/10/2020",
           "method": "Universal Credit Deduction",
+          "status": "received",
           "allocations": [
             {
               "debtId": 1,
@@ -162,6 +167,7 @@ module.exports = {
           "id": 6,
           "datetime": "12/09/2020",
           "method": "Universal Credit Deduction",
+          "status": "received",
           "allocations": [
             {
               "debtId": 1,
@@ -177,6 +183,7 @@ module.exports = {
           "id": 7,
           "datetime": "12/08/2020",
           "method": "Universal Credit Deduction",
+          "status": "received",
           "allocations": [
             {
               "debtId": 1,
@@ -218,7 +225,7 @@ module.exports = {
           "id": 3,
           "title": "Call from claimant",
           "datetime": "2021-05-04T11:19:00.000Z",
-          "activityBy": "Automated process",
+          "activityBy": "Conner Jones",
           "content": "Claimant queried reason for Universal Credit Overpayment.  Discussed overpayment period and amount owed. Told to ring Universal Credit for further explanation."
         }
       ],
@@ -247,6 +254,7 @@ module.exports = {
           "id": 1,
           "datetime": "2020-10-16T00:00:00.000Z",
           "method": "Universal Credit Deduction",
+          "status": "received",
           "allocations": [
             {
               "debtId": 1,
@@ -258,6 +266,7 @@ module.exports = {
           "id": 2,
           "datetime": "2020-11-16T00:00:00.000Z",
           "method": "Universal Credit Deduction",
+          "status": "received",
           "allocations": [
             {
               "debtId": 1,
@@ -269,6 +278,7 @@ module.exports = {
           "id": 3,
           "datetime": "2020-12-16T00:00:00.000Z",
           "method": "Universal Credit Deduction",
+          "status": "received",
           "allocations": [
             {
               "debtId": 1,
@@ -280,6 +290,7 @@ module.exports = {
           "id": 4,
           "datetime": "2021-01-15T00:00:00.000Z",
           "method": "Universal Credit Deduction",
+          "status": "received",
           "allocations": [
             {
               "debtId": 1,
@@ -291,6 +302,7 @@ module.exports = {
           "id": 5,
           "datetime": "2021-02-16T00:00:00.000Z",
           "method": "Universal Credit Deduction",
+          "status": "received",
           "allocations": [
             {
               "debtId": 1,
@@ -302,6 +314,7 @@ module.exports = {
           "id": 6,
           "datetime": "2021-03-16T00:00:00.000Z",
           "method": "Universal Credit Deduction",
+          "status": "received",
           "allocations": [
             {
               "debtId": 1,
@@ -313,10 +326,329 @@ module.exports = {
           "id": 7,
           "datetime": "2021-04-16T00:00:00.000Z",
           "method": "Universal Credit Deduction",
+          "status": "received",
           "allocations": [
             {
               "debtId": 1,
               "amount": 34.16
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "firstname": "Gemma",
+      "lastname": "McDonald",
+      "nino": "QQ 41 34 68 Z",
+      "onBenefit": true,
+      "benefits": [
+        "Universal Credit"
+      ],
+      "activities": [
+        {
+          "id": 1,
+          "title": "Universal Credit Advance (New Claims) received",
+          "datetime": "2020-09-16T01:44:00.000Z",
+          "activityBy": "Automated process",
+          "content": "Claimant received a New Claims Advance for £409.89."
+        },
+        {
+          "id": 2,
+          "title": "Universal Credit Overpayment",
+          "datetime": "2021-04-30T01:52:00.000Z",
+          "activityBy": "Automated process",
+          "content": "Claimant has a Universal Credit overpayment of £208.89."
+        },
+        {
+          "id": 3,
+          "title": "Call from claimant",
+          "datetime": "2021-05-04T11:19:00.000Z",
+          "activityBy": "Conner Jones",
+          "content": "Claimant queried reason for Universal Credit Overpayment.  Discussed overpayment period and amount owed. Told to ring Universal Credit for further explanation."
+        },
+        {
+          "id": 4,
+          "title": "Card Payment",
+          "datetime": "2021-06-23T14:19:00.000Z",
+          "activityBy": "Deborah Clarke",
+          "content": "A payment of £208.89 successfully received. Order code: DM11-QQ413468Z-1000430-23062021-MCDONALD-1"
+        }
+      ],
+      "debts": [
+        {
+          "id": 1,
+          "accountId": 1000426,
+          "title": "Universal Credit Advance (New Claims)",
+          "originalBalance": 409.89,
+          "status": "recover",
+          "advancedReceived": "2020-09-16T23:59:59.000Z",
+          "debtNextPayment": "2021-05-14T23:59:59.000Z",
+        },
+        {
+          "id": 2,
+          "accountId": 1000430,
+          "title": "Universal Credit Overpayment",
+          "originalBalance": 208.89,
+          "status": "paid",
+          "overpaymentStart": "2021-03-16T23:59:59.000Z",
+          "overpaymentEnd": "2021-04-16T23:59:59.000Z"
+        }
+      ],
+      "repayments": [
+        {
+          "id": 1,
+          "datetime": "2020-10-16T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "status": "received",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "datetime": "2020-11-16T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "status": "received",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "datetime": "2020-12-16T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "status": "received",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "datetime": "2021-01-15T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "status": "received",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "datetime": "2021-02-16T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "status": "received",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "datetime": "2021-03-16T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "status": "received",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "datetime": "2021-04-16T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "status": "received",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+        "id": 8,
+        "datetime": "2021-06-23T12:20:56.092Z",
+        "method": "Card Payment",
+        "status": "received",
+        "orderCode": "DM11-QQ413468Z-1000430-23062021-MCDONALD-1",
+        "allocations": [
+            {
+              "debtId": 2,
+              "amount": 208.89
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "firstname": "Gemma",
+      "lastname": "McDonald",
+      "nino": "QQ 41 34 68 Z",
+      "onBenefit": true,
+      "benefits": [
+        "Universal Credit"
+      ],
+      "activities": [
+        {
+          "id": 1,
+          "title": "Universal Credit Advance (New Claims) received",
+          "datetime": "2020-09-16T01:44:00.000Z",
+          "activityBy": "Automated process",
+          "content": "Claimant received a New Claims Advance for £409.89."
+        },
+        {
+          "id": 2,
+          "title": "Universal Credit Overpayment",
+          "datetime": "2021-04-30T01:52:00.000Z",
+          "activityBy": "Automated process",
+          "content": "Claimant has a Universal Credit overpayment of £208.89."
+        },
+        {
+          "id": 3,
+          "title": "Call from claimant",
+          "datetime": "2021-05-04T11:19:00.000Z",
+          "activityBy": "Conner Jones",
+          "content": "Claimant queried reason for Universal Credit Overpayment.  Discussed overpayment period and amount owed. Told to ring Universal Credit for further explanation."
+        },
+        {
+          "id": 4,
+          "title": "Card Payment",
+          "datetime": "2021-06-23T14:19:00.000Z",
+          "activityBy": "Deborah Clarke",
+          "content": "A payment of £100.00 successfully received. Order code: DM11-QQ413468Z-1000430-23062021-MCDONALD-1"
+        }
+      ],
+      "debts": [
+        {
+          "id": 1,
+          "accountId": 1000426,
+          "title": "Universal Credit Advance (New Claims)",
+          "originalBalance": 409.89,
+          "status": "recover",
+          "advancedReceived": "2020-09-16T23:59:59.000Z",
+          "debtNextPayment": "2021-05-14T23:59:59.000Z",
+        },
+        {
+          "id": 2,
+          "accountId": 1000430,
+          "title": "Universal Credit Overpayment",
+          "originalBalance": 208.89,
+          "status": "hold",
+          "overpaymentStart": "2021-03-16T23:59:59.000Z",
+          "overpaymentEnd": "2021-04-16T23:59:59.000Z"
+        }
+      ],
+      "repayments": [
+        {
+          "id": 1,
+          "datetime": "2020-10-16T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "status": "received",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "datetime": "2020-11-16T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "status": "received",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "datetime": "2020-12-16T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "status": "received",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "datetime": "2021-01-15T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "status": "received",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "datetime": "2021-02-16T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "status": "received",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "datetime": "2021-03-16T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "status": "received",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "datetime": "2021-04-16T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "status": "received",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+        "id": 8,
+        "datetime": "2021-06-23T12:20:56.092Z",
+        "method": "Card Payment",
+        "status": "received",
+        "orderCode": "DM11-QQ413468Z-1000430-23062021-MCDONALD-1",
+        "allocations": [
+            {
+              "debtId": 2,
+              "amount": 100.00
             }
           ]
         }

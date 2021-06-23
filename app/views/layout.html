@@ -49,9 +49,16 @@
   }) }}
 {% endblock %}
 
+
+
 {% set mainClasses = mainClasses | default("govuk-main-wrapper--auto-spacing") %}
 
+
+
+
 {% if useAutoStoreData %}
+
+
   {% block footer %}
     {{ govukFooter({
       meta: {
@@ -70,10 +77,14 @@
   {% endblock %}
 {% endif %}
 
+
+
 {% block bodyEnd %}
   {% block scripts %}
     {% include "includes/scripts.html" %}
     {% block pageScripts %}{% endblock %}
   {% endblock %}
   <!-- GOV.UK Prototype Kit {{releaseVersion}} -->
+
+  {% include "includes/clear-data.html" %}
 {% endblock %}

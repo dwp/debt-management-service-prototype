@@ -57,3 +57,11 @@ Usage example
   background-color: govuk-colour("white");
 }
 
+.clear-data-link {
+  display: inline-block;
+  padding: 7px 15px;
+  background-color: govuk-colour("light-grey");
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}

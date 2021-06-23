@@ -1,0 +1,60 @@
+{# Template overrides #}
+{% extends "layout.html" %}
+{% block footer %}{% endblock %}
+
+{# Import macros #}
+{% from ScenarioPath + 'macros/key-details.njk' import keyDetails as keyDetails %}
+{% from ScenarioPath + 'macros/back.njk' import back as back %}
+
+
+{% block header %}
+  {{ keyDetails(Person) }}
+  {{ back() }}
+{% endblock %}
+
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <section class="section ">
+
+          {% if CardPayment.paymentSuccessful %}
+            <div class="govuk-panel govuk-panel--confirmation">
+              <h1 class="govuk-panel__title">
+                Payment complete
+              </h1>
+              <div class="govuk-panel__body">
+                <strong>£{{ CardPayment.paymentAmount.toFixed(2) }}</strong> successfully paid towards {{ Debt.title }}
+              </div>
+            </div>
+          {% else %}
+            <h1 class="govuk-panel__title">
+                Payment failed
+              </h1>
+              <p>Payment of £{{ CardPayment.paymentAmount.toFixed(2) }} towards {{ Debt.title }} was not successful</p>
+          {% endif %}
+
+          <p>The diary entry has been automatically logged.</p>
+          <h2 class="govuk-heading-m">
+            What do you want to do next?
+          </h2>
+
+          <ul class="govuk-list">
+            {% if Debt.owed > 0 or not CardPayment.paymentSuccessful %}
+              <li>
+                {{ govukButton({
+                  text: "Take card payment",
+                  href: Breadcrumbs.debtDetails.url + "/card-payment-order-code"
+                }) }}
+              </li>
+            {% endif %}
+            <li><a class="govuk-link" href="{{ Breadcrumbs.debtDetails.url }}">Return to Universal Credit Overpayment: {{ Debt.accountId }}</a><br></li>
+            <li><a class="govuk-link" href="{{ Breadcrumbs.debtSummary.url }}">Return to Account summary</a></li>
+          </ul>
+      </section>
+    </div>
+  </div>
+  
+{% endblock %}

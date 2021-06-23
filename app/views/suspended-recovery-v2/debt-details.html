@@ -41,7 +41,7 @@
           </div>
           <div class="key-values-col govuk-grid-column-one-third">
             <dt class="govuk-caption-m govuk-!-margin-bottom-0">Owed</dt>
-            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ (Debt.originalBalance - Debt.repaid).toFixed(2) }}</dd>
+            <dd class="govuk-heading-l govuk-!-margin-left-0">£{{ Debt.owed.toFixed(2) }}</dd>
           </div> 
         </dl>
 
@@ -92,11 +92,15 @@
         <h2 class="card-title govuk-heading-m govuk-!-font-weight-regular">
           Repayment history
         </h2>
+
+        {% if Debt.owed > 0 %}
+          {{ govukButton({
+            text: "Take card payment",
+            href: Breadcrumbs.debtDetails.url + "/card-payment-order-code"
+          }) }}
+        {% endif %}
         
-        {{ govukButton({
-          text: "Take card payment",
-          href: Breadcrumbs.debtDetails.url + "/card-payment-order-code"
-        }) }}
+        
 
 
         {% if Repayments.length > 0 %}
@@ -106,6 +110,7 @@
               <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Date</th>
                 <th scope="col" class="govuk-table__header">Repayment Method</th>
+                <th scope="col"></th>
                 <th scope="col" class="govuk-table__header govuk-table__header--numeric">Amount</th>
               </tr>
             </thead>

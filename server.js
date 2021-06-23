@@ -222,7 +222,7 @@ if (useLogging !== 'false') {
         data: req.session.data
       }
       // log session data in console
-      console.log(JSON.stringify(log, null, 2))
+      //console.log(JSON.stringify(log, null, 2))
     }
     next()
   })

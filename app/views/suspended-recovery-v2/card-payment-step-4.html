@@ -6,9 +6,6 @@
 {% from ScenarioPath + 'macros/key-details.njk' import keyDetails as keyDetails %}
 {% from ScenarioPath + 'macros/back.njk' import back as back %}
 
-{% from ScenarioPath + 'macros/status.njk' import status as status %}
-{% from ScenarioPath + 'macros/repayment-row.njk' import repayment as repaymentRow %}
-
 
 {% block header %}
   {{ keyDetails(Person) }}
@@ -19,62 +16,80 @@
 {% block content %}
 
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
+    <div class="govuk-grid-column-two-thirds">
 
-      <section class="section js-validation-group">
-        <div class="govuk-error-summary js-error-summary js-validation--hidden" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
-            <h2 class="govuk-error-summary__title" id="error-summary-title">
-              There is a problem
-            </h2>
-            <div class="govuk-error-summary__body">
-              <ul class="govuk-list govuk-error-summary__list">
-                <li id="payment-amount-summary-error" class="js-money-error js-validation--hidden">
-                  <a href="#payment-amount">Enter a valid payment amount</a>
-                </li>
-                <li id="payment-amount-summary-error2" class="js-money-error js-validation--hidden">
-                  <a href="#payment-amount">Enter a valid payment amount</a>
-                </li>
-                <li id="payment-amount-summary-error3" class="js-money-error js-validation--hidden">
-                  <a href="#payment-amount">Enter a valid payment amount</a>
-                </li>
-              </ul>
+      <section class="section ">
+
+          <span class="govuk-caption-l">Take card payment</span>
+          <h1 class="govuk-heading-l">
+            Confirm diary entry
+          </h1>
+
+          <p class="govuk-!-margin-bottom-8">Confirm diary entry below and select 'Finish'. If you want to make changes select 'Change' from the details below.</p>
+
+          <h2 class="govuk-heading-m">
+            Diary entry details
+          </h2>
+
+          <dl class="govuk-summary-list govuk-!-margin-bottom-8">
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Order Code
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {{ CardPayment.orderCode }}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                
+              </dd>
             </div>
-          </div>
-
-        <form class="form" action="{{ Breadcrumbs.debtDetails.url + '/card-payment-check-answers/' + CardPayment.orderCode }}" method="post">
-          <div class="govuk-form-group js-validate js-money " data-js-valid="false">
-            <span class="govuk-caption-l">Take card payment</span>
-            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="cost">
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Payment successful
+              </dt>
+              <dd class="govuk-summary-list__value">
+                {% if CardPayment.paymentSuccessful %}
+                  Yes
+                {% else%}
+                  No
+                {% endif %}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="{{ Breadcrumbs.debtDetails.url + '/card-payment-success/' + CardPayment.orderCode }}">
+                  Change<span class="govuk-visually-hidden"> payment successful</span>
+                </a>
+              </dd>
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
                 Payment amount
-              </label>
-            </h1>
-
-            <div id="payment-amount-hint" class="govuk-hint">
-              The amount paid on PCIpal for this transaction only.<br>Payment amount can include or exclude pence, like 12.34 or 56.  
+              </dt>
+              <dd class="govuk-summary-list__value">
+                £{{ CardPayment.paymentAmount.toFixed(2) }}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="{{ Breadcrumbs.debtDetails.url + '/card-payment-amount/' + CardPayment.orderCode }}">
+                  Change<span class="govuk-visually-hidden"> payment amount</span>
+                </a>
+              </dd>
             </div>
+          </dl>
 
-            <span id="payment-amount-empty-error" class="govuk-error-message js-error-message js-validation--hidden">
-              <span class="govuk-visually-hidden">Error:</span> Enter payment amount
-            </span>
-
-            <span id="payment-amount-min-error" class="govuk-error-message js-error-message js-validation--hidden">
-              <span class="govuk-visually-hidden">Error:</span> Payment amount must be £0.01 or more
-            </span>
-
-            <span id="payment-amount-invalid-error" class="govuk-error-message js-error-message js-validation--hidden">
-              <span class="govuk-visually-hidden">Error:</span> Payment amount must only include numers 0 to 9, and only one decimal point if including pence
-            </span>
-
-            <div class="govuk-input__wrapper">
-              <div class="govuk-input__prefix" aria-hidden="true">£</div>
-              <input class="govuk-input govuk-input--width-5 js-validate-field" id="payment-amount" name="cardPaymentForm[paymentAmount]" type="text" spellcheck="false" {% if CardPayment.paymentAmount != null %}value="{{ CardPayment.paymentAmount.toFixed(2) }}"{% endif %}  >
-            </div>
-
+          <div class="govuk-!-margin-bottom-8">
+            <h2 class="govuk-heading-m">
+              Diary entry
+            </h2>
+            {% if CardPayment.paymentSuccessful %}
+              <p>A payment of £{{ CardPayment.paymentAmount.toFixed(2) }} successfully received. Order code: {{ CardPayment.orderCode }}</p>
+            {% else%}
+              <p>A payment of £{{ CardPayment.paymentAmount.toFixed(2) }} attempted. Payment failed. Order code: {{ CardPayment.orderCode }}</p>
+            {% endif %}
           </div>
 
           {{ govukButton({
-              text: "Next",
-              classes: "js-submit-validation"
+              text: "Finish",
+              href: Breadcrumbs.debtDetails.url + '/card-payment-confirmation/' + CardPayment.orderCode,
+              classes: ""
             }) }}
         </form>
       </section>
@@ -83,7 +98,5 @@
     </div>
     
   </div>
-
-  <a href="/prototype-admin/clear-data">Clear data</a>
 
 {% endblock %}

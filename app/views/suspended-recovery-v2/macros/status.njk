@@ -3,5 +3,9 @@
       <strong class="govuk-tag">In recovery</strong>
   {% elseif status == 'hold' %}
       <strong class="govuk-tag govuk-tag--grey">On hold - functionality</strong>
+  {% elseif status == 'pending' %}
+      <strong class="govuk-tag govuk-tag--yellow">Pending payment</strong>
+  {% elseif status == 'paid' %}
+      <strong class="govuk-tag govuk-tag--green">Paid</strong>
   {% endif %}  
 {% endmacro %}

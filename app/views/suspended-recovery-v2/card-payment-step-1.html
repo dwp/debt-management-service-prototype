@@ -5,8 +5,6 @@
 {# Import macros #}
 {% from ScenarioPath + 'macros/key-details.njk' import keyDetails as keyDetails %}
 {% from ScenarioPath + 'macros/back.njk' import back as back %}
-{% from ScenarioPath + 'macros/status.njk' import status as status %}
-{% from ScenarioPath + 'macros/repayment-row.njk' import repayment as repaymentRow %}
 
 
 {% block header %}
@@ -20,7 +18,7 @@
 
 
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
+    <div class="govuk-grid-column-two-thirds">
 
       <section class="section">
         <span class="govuk-caption-l">Take card payment</span>
@@ -61,7 +59,7 @@
        
        {{ govukButton({
           text: "Finished",
-          href: Breadcrumbs.debtDetails.url + "/card-payment-outcome/" + CardPayment.orderCode
+          href: Breadcrumbs.debtDetails.url + "/card-payment-success/" + CardPayment.orderCode
         }) }}
       </section>
 

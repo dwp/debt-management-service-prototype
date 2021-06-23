@@ -5,8 +5,6 @@
 {# Import macros #}
 {% from ScenarioPath + 'macros/key-details.njk' import keyDetails as keyDetails %}
 {% from ScenarioPath + 'macros/back.njk' import back as back %}
-{% from ScenarioPath + 'macros/status.njk' import status as status %}
-{% from ScenarioPath + 'macros/repayment-row.njk' import repayment as repaymentRow %}
 {% from ScenarioPath + 'macros/checked-if-value.njk' import checkedIfValue as checkedIfValue %}
 
 {% block header %}
@@ -18,7 +16,7 @@
 {% block content %}
 
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
+    <div class="govuk-grid-column-two-thirds">
 
       <section class="section js-validation-group">
         <div class="govuk-error-summary js-error-summary js-validation--hidden" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
@@ -79,7 +77,5 @@
     </div>
     
   </div>
-
-  <a href="/prototype-admin/clear-data">Clear data</a>
 
 {% endblock %}
