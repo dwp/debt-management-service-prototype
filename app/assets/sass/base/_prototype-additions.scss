@@ -8,10 +8,7 @@ hr {
 
 }
 
-// Key details overrides
-.dm-ordercode-dt-width {
-    width: 15%;
-}
+
 
 .display-none {
     display: none;
@@ -19,4 +16,12 @@ hr {
 
 .visibility-hidden {
     visibility: hidden;
+}
+
+.visibly-hidden {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    clip-path: circle(0);
+    transform: scale(0);
 }

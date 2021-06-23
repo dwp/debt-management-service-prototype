@@ -37,23 +37,13 @@
               {{ CardPayment.orderCode }}
             </dd>
             <dd class="govuk-summary-list__actions">
-              {# <input class="" id="order-code" type="text" readonly value="{{ cardPayment.orderCode }}"> #}
-              <a id="copy" class="govuk-link" href="#">
+              <input id="copyOrderCode" class="visibly-hidden" id="order-code" type="text" aria-hidden="true" readonly value="{{ CardPayment.orderCode }}">
+              <a class="govuk-link js-copy" data-copy-field="copyOrderCode" href="#">
                 Copy<span class="govuk-visually-hidden"> order code</span>
               </a>
             </dd>
           </div>
         </dl>
-
-        <script>
-          function copy() {
-            var copyText = document.querySelector("#order-code");
-            copyText.select();
-            document.execCommand("copy");
-          }
-
-          document.querySelector("#copy").addEventListener("click", copy);
-        </script>
 
         <p>Select 'Finished' when you are ready to create a diary entry.</p>
        
@@ -62,8 +52,7 @@
           href: Breadcrumbs.debtDetails.url + "/card-payment-success/" + CardPayment.orderCode
         }) }}
       </section>
-
-
+      
     </div>
     
   </div>

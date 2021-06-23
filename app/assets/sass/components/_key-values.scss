@@ -11,6 +11,11 @@
     }
 }
 
+// Key details overrides
+.dm-ordercode-dt-width {
+    width: 15%;
+}
+
 .key-values-col {
     border-left: 1px solid govuk-colour("blue");
     padding-left: govuk-spacing(4);

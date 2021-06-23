@@ -10,6 +10,22 @@ $(document).ready(function () {
   validation();
 })
 
+// copy text
+if ( $('.js-copy').length ) {
+  $('.js-copy').each(function(){
+    const $copy = $(this),
+          $source = $('#' + $copy.data('copy-field'));
+
+    console.dir($source);
+
+    $copy.click(function(e) {
+      $source.select();
+      document.execCommand('copy');
+    });
+  })
+}
+
+
 //======== form validation =============
 const validation = function(){
   
