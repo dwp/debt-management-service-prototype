@@ -372,7 +372,7 @@ module.exports = {
           "title": "Card Payment",
           "datetime": "2021-06-23T14:19:00.000Z",
           "activityBy": "Deborah Clarke",
-          "content": "A payment of £208.89 successfully received. Order code: DM11-QQ413468Z-1000430-23062021-MCDONALD-1"
+          "content": "A card payment of £208.89 successfully received via PCI Pal. Order code: DM11-QQ413468Z-1000430-23062021-MCDONALD-1"
         }
       ],
       "debts": [
@@ -531,7 +531,7 @@ module.exports = {
           "title": "Card Payment",
           "datetime": "2021-06-23T14:19:00.000Z",
           "activityBy": "Deborah Clarke",
-          "content": "A payment of £100.00 successfully received. Order code: DM11-QQ413468Z-1000430-23062021-MCDONALD-1"
+          "content": "A card payment of £100.00 successfully received via PCI Pal. Order code: DM11-QQ413468Z-1000430-23062021-MCDONALD-1"
         }
       ],
       "debts": [

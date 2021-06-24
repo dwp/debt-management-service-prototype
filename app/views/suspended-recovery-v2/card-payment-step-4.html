@@ -25,7 +25,9 @@
             Confirm diary entry
           </h1>
 
-          <p class="govuk-!-margin-bottom-8">Confirm diary entry below and select 'Finish'. If you want to make changes select 'Change' from the details below.</p>
+          <p class="govuk-!-margin-bottom-8">
+            If you want to edit your answers, select 'Change' in the debt entry details below. Confirm the diary entry and select 'Finish' when you are done.
+          </p>
 
           <h2 class="govuk-heading-m">
             Diary entry details
@@ -80,9 +82,9 @@
               Diary entry
             </h2>
             {% if CardPayment.paymentSuccessful %}
-              <p>A payment of £{{ CardPayment.paymentAmount.toFixed(2) }} successfully received. Order code: {{ CardPayment.orderCode }}</p>
+              <p>A card payment of £{{ CardPayment.paymentAmount.toFixed(2) }} successfully received via PCI Pal. Order code: {{ CardPayment.orderCode }}</p>
             {% else%}
-              <p>A payment of £{{ CardPayment.paymentAmount.toFixed(2) }} attempted. Payment failed. Order code: {{ CardPayment.orderCode }}</p>
+              <p>A card payment of £{{ CardPayment.paymentAmount.toFixed(2) }} attempted via PCI Pal. Payment failed. Order code: {{ CardPayment.orderCode }}</p>
             {% endif %}
           </div>
 

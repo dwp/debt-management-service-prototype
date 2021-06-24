@@ -570,11 +570,11 @@ router.get('/scenario/:scenario/v/:versionId/person/:personId/debt-details/:debt
 
         if ( req.cardPayment.paymentSuccessful ) {
             activitiyTitle = 'Card payment received';
-            activityContent = 'A payment of £' + req.cardPayment.paymentAmount.toFixed(2) + ' successfully received. Order code: ' + req.cardPayment.orderCode;
-
+            activityContent = 'A card payment of £' + req.cardPayment.paymentAmount.toFixed(2) + ' successfully received via PCI Pal. Order code: ' + req.cardPayment.orderCode;
+     
         } else {
             activitiyTitle = 'Card payment failed';
-            activityContent = 'A payment of £' + req.cardPayment.paymentAmount.toFixed(2) + ' attempted. Payment failed. Order code: ' + req.cardPayment.orderCode;
+            activityContent = 'A card payment of £' + req.cardPayment.paymentAmount.toFixed(2) + ' attempted via PCI Pal. Payment failed. Order code: ' + req.cardPayment.orderCode;
         }
 
         req.person.activities.push({

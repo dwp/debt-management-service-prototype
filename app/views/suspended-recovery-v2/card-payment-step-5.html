@@ -22,7 +22,7 @@
           {% if CardPayment.paymentSuccessful %}
             <div class="govuk-panel govuk-panel--confirmation">
               <h1 class="govuk-panel__title">
-                Payment complete
+                Card payment complete
               </h1>
               <div class="govuk-panel__body">
                 <strong>£{{ CardPayment.paymentAmount.toFixed(2) }}</strong> successfully paid towards {{ Debt.title }}
@@ -32,7 +32,9 @@
             <h1 class="govuk-panel__title">
                 Payment failed
               </h1>
-              <p>Payment of £{{ CardPayment.paymentAmount.toFixed(2) }} towards {{ Debt.title }} was not successful</p>
+              <p>
+                A card payment of £{{ CardPayment.paymentAmount.toFixed(2) }} towards a {{ Debt.title }} was not successful.
+              </p>
           {% endif %}
 
           <p>The diary entry has been automatically logged.</p>
