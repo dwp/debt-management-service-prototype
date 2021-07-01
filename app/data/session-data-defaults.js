@@ -333,6 +333,30 @@ module.exports = {
               "amount": 34.16
             }
           ]
+        },
+        {
+          "id": 8,
+          "datetime": "2021-05-17T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "status": "received",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "datetime": "2021-06-16T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "status": "received",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
         }
       ]
     },
@@ -481,7 +505,31 @@ module.exports = {
           ]
         },
         {
-        "id": 8,
+          "id": 8,
+          "datetime": "2021-05-17T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "status": "received",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "datetime": "2021-06-16T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "status": "received",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+        "id": 10,
         "datetime": "2021-06-23T12:20:56.092Z",
         "method": "Card Payment",
         "status": "received",
@@ -640,7 +688,31 @@ module.exports = {
           ]
         },
         {
-        "id": 8,
+          "id": 8,
+          "datetime": "2021-05-17T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "status": "received",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "datetime": "2021-06-16T00:00:00.000Z",
+          "method": "Universal Credit Deduction",
+          "status": "received",
+          "allocations": [
+            {
+              "debtId": 1,
+              "amount": 34.16
+            }
+          ]
+        },
+        {
+        "id": 10,
         "datetime": "2021-06-23T12:20:56.092Z",
         "method": "Card Payment",
         "status": "received",
